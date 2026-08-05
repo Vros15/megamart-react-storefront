@@ -1,0 +1,156 @@
+
+:root {
+  /* --- Palette ----------------------------------------------------------- */
+  --indigo: #4f46e5;
+  --indigo-pressed: #4338ca;
+  --midnight: #111827;
+  --slate: #64748b;
+  --amber: #f59e0b;
+  --burnt-orange: #c2410c;
+  --green: #15803d;
+  --snow: #f8fafc;
+  --tint: #f1f5f9;
+  --white: #ffffff;
+  --border: #e2e8f0;
+
+  /* --- Semantic ----------------------------------------------------------
+     Indigo carries every primary action.
+     Amber marks genuine promotions.
+     Burnt orange is reserved for real scarcity. */
+  --color-primary: var(--indigo);
+  --color-primary-pressed: var(--indigo-pressed);
+
+  --color-text: var(--midnight);         /* headlines, product names, prices */
+  --color-text-muted: var(--slate);      /* descriptions, metadata */
+
+  --color-background: var(--snow);       /* page ground */
+  --color-surface: var(--white);         /* cards, navigation */
+  --color-fill: var(--tint);             /* image wells, subtle fills */
+  --color-border: var(--border);
+
+  --color-featured: var(--amber);        /* restrained promotion only */
+  --color-urgency: var(--burnt-orange);  /* genuine low stock only */
+  --color-success: var(--green);         /* in stock, confirmations */
+
+/* --- Typography ---------------------------------------------------------
+     Sora carries the wordmark and headings
+     Inter handles prices, filters and specifications, which stay readable at 12-15px
+*/
+  --font-heading: "Sora", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --text-display: 2.625rem;  /* 42px - Sora 700, -0.03em */
+  --text-section: 1.625rem;  /* 26px - Sora 600 */
+  --text-price: 1.25rem;     /* 20px - Sora 700, tabular */
+  --text-body: 0.9375rem;    /* 15px - Inter 400 / 1.6 */
+  --text-ui: 0.8125rem;      /* 13px - Inter 600 */
+  --text-meta: 0.75rem;      /* 12px - Inter 500 */
+
+  /* --- Spacing and shape -------------------------------------------------- */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+
+  --radius: 6px;
+  --max-width: 1100px;
+}
+
+/* ===========================================================================
+   Reset
+   =========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Stops an oversized image from forcing the page wider than the viewport. */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form controls do not inherit typography by default. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ===========================================================================
+   Base elements
+   =========================================================================== */
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: var(--text-section);
+  font-weight: 600;
+}
+
+/* ===========================================================================
+   Shared utilities
+   =========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+/* Digits share one width, so prices in a column line up on the decimal. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hides content visually while leaving it available to screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
