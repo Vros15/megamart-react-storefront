@@ -1,0 +1,18 @@
+
+.spinner {
+  /* Styles for the loading spinner */
+  width: 32px;
+  height: 32px;
+  margin: var(--space-xl) auto;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+/* Keyframes for the spinner rotation animation */
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
