@@ -1,0 +1,5 @@
+.home-error {
+  color: var(--color-urgency);
+  text-align: center;
+  padding: var(--space-xl) 0;
+}

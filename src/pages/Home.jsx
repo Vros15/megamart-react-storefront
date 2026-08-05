@@ -1,12 +1,29 @@
-/**
- * Product grid lands here in task 5. Placeholder content only, so routing can
- * be verified before the API is wired into a page.
- */
-const Home = () => (
-  <>
-    <h1>Shop MegaMart</h1>
-    <p>Product grid placeholder</p>
-  </>
-);
+import { fetchProducts } from "../api/products";
+import useFetch from "../hooks/useFetch";
+import ProductGrid from "../components/products/ProductGrid";
+import Spinner from "../components/ui/Spinner";
+import "./Home.css";
+
+const Home = () => {
+  // Fetch products and track the request state.
+  const { data, loading, error } = useFetch(fetchProducts);
+
+  return (
+    <>
+      <h1>Shop MegaMart</h1>
+
+       {/* Request status */}
+      {loading && <Spinner />}
+
+      {error && (
+        <p className="home-error">
+          Could not load products: {error}
+        </p>
+      )}
+       {/* Product results - data.products is passed to the ProductGrid component */}
+      {data && <ProductGrid products={data.products} />}
+    </>
+  );
+};
 
 export default Home;
