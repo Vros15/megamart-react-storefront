@@ -17,9 +17,9 @@ show a total, alert on checkout, and navigate with React Router.
 - [x] **1. Scaffold project and remove Vite boilerplate**
   - `npm run dev` serves a clean page with no Vite demo content
 
-- [ ] **2. Add products API client**
-  - A product returns normalised as `id`, `name`, `price`, `image`, `description`,
-    `category`, `stock`, regardless of which API supplied it
+- [x] **2. Add products API client**
+  - `fetchProducts` returns products normalised as `id`, `name`, `price`, `image`,
+    `description`, `category`, `stock`, plus the API's pagination `meta`
 
 - [ ] **3. Add routing and page shell**
   - Navigating between `/` and `/cart` works without a full page reload
