@@ -28,7 +28,7 @@ show a total, alert on checkout, and navigate with React Router.
 - [x] **4. Add routing and page shell**
   - Navigating between `/` and `/cart` works without a full page reload
 
-- [ ] **5. Render the product grid**
+- [x] **5. Render the product grid**
   - Products render from the live API, with visible loading and error states
 
 - [ ] **6. Add cart state**
