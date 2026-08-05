@@ -25,7 +25,7 @@ show a total, alert on checkout, and navigate with React Router.
   - `index.css` holds the reset, colour and spacing tokens, base element styles,
     and the shared `.container` wrapper
 
-- [ ] **4. Add routing and page shell**
+- [x] **4. Add routing and page shell**
   - Navigating between `/` and `/cart` works without a full page reload
 
 - [ ] **5. Render the product grid**
