@@ -21,7 +21,7 @@ show a total, alert on checkout, and navigate with React Router.
   - `fetchProducts` returns products normalised as `id`, `name`, `price`, `image`,
     `description`, `category`, `stock`, plus the API's pagination `meta`
 
-- [ ] **3. Add global styles**
+- [x] **3. Add global styles**
   - `index.css` holds the reset, colour and spacing tokens, base element styles,
     and the shared `.container` wrapper
 
