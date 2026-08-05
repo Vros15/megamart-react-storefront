@@ -1,6 +1,13 @@
+import Header from './components/layout/Header'
+
 function App() {
   return (
-    <h1 className="p-8 text-3xl font-bold text-teal-700">Welcome to MegaMart</h1>
+    <>
+      <Header />
+      <main>
+        <h1>Home Page Staging</h1>
+      </main>
+    </>
   )
 }
 
