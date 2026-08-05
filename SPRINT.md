@@ -21,22 +21,25 @@ show a total, alert on checkout, and navigate with React Router.
   - `fetchProducts` returns products normalised as `id`, `name`, `price`, `image`,
     `description`, `category`, `stock`, plus the API's pagination `meta`
 
-- [ ] **3. Add routing and page shell**
+- [ ] **3. Add Tailwind CSS**
+  - A Tailwind utility class applied in `App.jsx` visibly changes the page
+
+- [ ] **4. Add routing and page shell**
   - Navigating between `/` and `/cart` works without a full page reload
 
-- [ ] **4. Render the product grid**
+- [ ] **5. Render the product grid**
   - Products render from the live API, with visible loading and error states
 
-- [ ] **5. Add cart state**
+- [ ] **6. Add cart state**
   - Adding the same product twice sets its quantity to 2 rather than duplicating it
 
-- [ ] **6. Add products to the cart from the grid**
+- [ ] **7. Add products to the cart from the grid**
   - Clicking Add to Cart updates cart state from the home page
 
-- [ ] **7. Build the cart page**
+- [ ] **8. Build the cart page**
   - Cart lists items with quantities and a correct total; Checkout alerts the total
 
-- [ ] **8. Show the cart count in the header**
+- [ ] **9. Show the cart count in the header**
   - Badge reflects total quantity across all items
 
 ---
@@ -54,7 +57,97 @@ Planned after Sprint 1 is complete. Ordered by value relative to effort.
 
 ---
 
+## Planned Folder Structure
+
+The target layout. Directories are created as the task that needs them lands,
+rather than up front, since git does not track empty directories and placeholder
+files cannot be reviewed.
+
+```text
+src/
+├── api/
+│   ├── products.js          fetchProducts, fetchProductById
+│   └── orders.js            added with order history
+├── components/
+│   ├── layout/
+│   │   ├── Layout.jsx       header, <Outlet />, footer
+│   │   ├── Header.jsx       brand, nav, cart badge, account menu
+│   │   └── Footer.jsx
+│   ├── products/
+│   │   ├── ProductGrid.jsx  the list and its empty state
+│   │   ├── ProductCard.jsx  one product
+│   │   └── AddToCartButton.jsx
+│   ├── cart/
+│   │   ├── CartItem.jsx     one line with quantity controls
+│   │   └── CartSummary.jsx  totals and checkout
+│   ├── auth/
+│   │   └── ProtectedRoute.jsx
+│   └── ui/
+│       ├── Button.jsx
+│       ├── Spinner.jsx
+│       └── EmptyState.jsx
+├── context/
+│   ├── CartContext.jsx      the provider
+│   └── cartReducer.js       state transitions, no React involved
+├── hooks/
+│   ├── useCart.js           reads CartContext
+│   └── useFetch.js          loading, error, and data
+├── lib/
+│   ├── constants.js         API base URL
+│   └── format.js            price formatting, image fallback
+├── pages/
+│   ├── Home.jsx
+│   ├── Cart.jsx
+│   ├── ProductDetail.jsx    Sprint 2
+│   ├── SignIn.jsx           Sprint 2
+│   ├── SignUp.jsx           Sprint 2
+│   ├── Profile.jsx          Sprint 2
+│   ├── Orders.jsx           Sprint 2
+│   └── NotFound.jsx
+├── App.jsx                  route definitions
+├── main.jsx                 providers and router
+└── index.css                Tailwind import
+```
+
+### Why it is arranged this way
+
+**`pages/` versus `components/`** is the routing boundary. A page maps to a URL
+and composes components. Nothing inside `components/` should know which route it
+is rendered on.
+
+**`components/` is grouped by feature.** A flat folder works up to roughly six
+components; this app will hold more. `ui/` is reserved for components with no
+domain knowledge, so a `Button` never learns what a product is.
+
+**`AddToCartButton` is separate from `ProductCard`** because the product detail
+page needs the same behaviour. Shared behaviour belongs in a hook or a shared
+component, not duplicated across two callers.
+
+**`cartReducer.js` is split from `CartContext.jsx`** so the state transitions
+stay a plain function, testable without rendering anything.
+
+**`ProtectedRoute` wraps routes rather than pages checking auth themselves**, so
+the signed-in requirement is declared once in the route table.
+
+---
+
+## Routing Shape
+
+`Layout` renders persistently and pages swap inside its `<Outlet />`, so the
+header does not remount on navigation.
+
+```jsx
+<Routes>
+  <Route element={<Layout />}>
+    <Route path="/" element={<Home />} />
+    <Route path="/cart" element={<Cart />} />
+    <Route path="*" element={<NotFound />} />
+  </Route>
+</Routes>
+```
+
+---
+
 ## Styling
 
-Tailwind CSS v4 via `@tailwindcss/vite`. Added in task 3, when there is layout
-worth styling.
+Tailwind CSS v4 via `@tailwindcss/vite`, added in task 3.
