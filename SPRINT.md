@@ -1,6 +1,6 @@
 # Sprint Plan
 
-MegaMart is a React storefront consuming the MegaMart backend API.
+MegaMart is a React storefront consuming the MegaMart backend API from `https://github.com/Vros15/ecommerce-backend-api`
 
 Each task below is one commit. Tasks are ordered so the application runs after
 every one of them.
