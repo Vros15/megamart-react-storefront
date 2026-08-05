@@ -8,7 +8,6 @@ const ProductCard = ({ product }) => {
   const [imageFailed, setImageFailed] = useState(false);
   // Determine whether to show the product image or the fallback.
   const showImage = product.image && !imageFailed;
-  console.log(product);
 
   return (
     <article className="product-card">
