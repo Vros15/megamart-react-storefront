@@ -21,8 +21,9 @@ show a total, alert on checkout, and navigate with React Router.
   - `fetchProducts` returns products normalised as `id`, `name`, `price`, `image`,
     `description`, `category`, `stock`, plus the API's pagination `meta`
 
-- [ ] **3. Add Tailwind CSS**
-  - A Tailwind utility class applied in `App.jsx` visibly changes the page
+- [ ] **3. Add global styles**
+  - `index.css` holds the reset, colour and spacing tokens, base element styles,
+    and the shared `.container` wrapper
 
 - [ ] **4. Add routing and page shell**
   - Navigating between `/` and `/cart` works without a full page reload
@@ -71,21 +72,31 @@ src/
 ├── components/
 │   ├── layout/
 │   │   ├── Layout.jsx       header, <Outlet />, footer
+│   │   ├── Layout.css
 │   │   ├── Header.jsx       brand, nav, cart badge, account menu
-│   │   └── Footer.jsx
+│   │   ├── Header.css
+│   │   ├── Footer.jsx
+│   │   └── Footer.css
 │   ├── products/
 │   │   ├── ProductGrid.jsx  the list and its empty state
+│   │   ├── ProductGrid.css
 │   │   ├── ProductCard.jsx  one product
+│   │   ├── ProductCard.css
 │   │   └── AddToCartButton.jsx
 │   ├── cart/
 │   │   ├── CartItem.jsx     one line with quantity controls
-│   │   └── CartSummary.jsx  totals and checkout
+│   │   ├── CartItem.css
+│   │   ├── CartSummary.jsx  totals and checkout
+│   │   └── CartSummary.css
 │   ├── auth/
 │   │   └── ProtectedRoute.jsx
 │   └── ui/
 │       ├── Button.jsx
+│       ├── Button.css
 │       ├── Spinner.jsx
-│       └── EmptyState.jsx
+│       ├── Spinner.css
+│       ├── EmptyState.jsx
+│       └── EmptyState.css
 ├── context/
 │   ├── CartContext.jsx      the provider
 │   └── cartReducer.js       state transitions, no React involved
@@ -97,7 +108,9 @@ src/
 │   └── format.js            price formatting, image fallback
 ├── pages/
 │   ├── Home.jsx
+│   ├── Home.css
 │   ├── Cart.jsx
+│   ├── Cart.css
 │   ├── ProductDetail.jsx    Sprint 2
 │   ├── SignIn.jsx           Sprint 2
 │   ├── SignUp.jsx           Sprint 2
@@ -106,7 +119,7 @@ src/
 │   └── NotFound.jsx
 ├── App.jsx                  route definitions
 ├── main.jsx                 providers and router
-└── index.css                Tailwind import
+└── index.css                global: reset, tokens, base elements, .container
 ```
 
 ### Why it is arranged this way
@@ -150,4 +163,15 @@ header does not remount on navigation.
 
 ## Styling
 
-Tailwind CSS v4 via `@tailwindcss/vite`, added in task 3.
+Plain CSS, no framework.
+
+- `src/index.css` is the global stylesheet: reset, `:root` custom properties for
+  colour and spacing, base element styles, and shared utilities such as
+  `.container`.
+- Each component keeps a stylesheet beside it, imported by that component.
+- **Class names are prefixed with the component name.** Importing a stylesheet
+  inside a component does not scope it - Vite bundles all CSS together and every
+  class is global. `.header-nav` and `.product-card-title` rather than `.nav` and
+  `.title`.
+
+This may be revisited once the project is complete.
