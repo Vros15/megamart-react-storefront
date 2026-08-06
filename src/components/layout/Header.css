@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header-brand:hover {
+  text-decoration: none;
+}
+
+.header-brand-mark {
+  display: block;
+}
+
+.header-brand-word {
+  font-family: var(--font-heading);
+  font-size: var(--text-section);
+  font-weight: 700;
+}
+
+.header-brand-word-mega {
+  color: var(--color-primary);
+}
+
+.header-brand-word-mart {
+  color: var(--color-text);
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
