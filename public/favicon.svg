@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges" role="img" aria-labelledby="title">
+  <title id="title">MegaMart 16 pixel favicon</title>
+  <rect width="16" height="16" rx="3" fill="#4F46E5" shape-rendering="geometricPrecision"/>
+  <path fill="#FFFFFF" fill-rule="evenodd" d="M4 3h2v2H4Zm6 0h3v2h-3ZM4 6h2v3H4Zm3 0h2v3H7Zm3 0h3v3h-3ZM4 10h2v2H4Zm6 0h3v2h-3Z"/>
+</svg>
