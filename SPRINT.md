@@ -34,10 +34,10 @@ show a total, alert on checkout, and navigate with React Router.
 - [x] **6. Add cart state**
   - Adding the same product twice sets its quantity to 2 rather than duplicating it
 
-- [ ] **7. Add products to the cart from the grid**
+- [x] **7. Add products to the cart from the grid**
   - Clicking Add to Cart updates cart state from the home page
 
-- [ ] **8. Build the cart page**
+- [x] **8. Build the cart page**
   - Cart lists items with quantities and a correct total; Checkout alerts the total
 
 - [ ] **9. Show the cart count in the header**
