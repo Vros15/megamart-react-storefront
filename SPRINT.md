@@ -40,7 +40,7 @@ show a total, alert on checkout, and navigate with React Router.
 - [x] **8. Build the cart page**
   - Cart lists items with quantities and a correct total; Checkout alerts the total
 
-- [ ] **9. Show the cart count in the header**
+- [x] **9. Show the cart count in the header**
   - Badge reflects total quantity across all items
 
 ---
