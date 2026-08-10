@@ -53,6 +53,23 @@ Planned after Sprint 1 is complete. Ordered by value relative to effort.
 - [ ] Custom hooks and wrapper components for repeated logic and layout
 - [ ] Product detail pages at `/products/:id`
 - [ ] Clerk authentication, with the API verifying tokens rather than only the UI
+  - Confirmed 2026-08-10 via Postman: `POST`/`PUT`/`DELETE` on `/api/products`
+    currently accept requests from anyone, no token required
+  - **Design decision (2026-08-10):** product management is restricted to a
+    single admin account, not "any signed-in user." This project is a public
+    portfolio demo - the goal is stopping a stranger from deleting the
+    catalog, not building general-purpose role management.
+    - Backend: `requireAuth()` (Clerk) + a `requireAdmin` middleware that
+      compares the token's user ID against an `ADMIN_USER_ID` env var
+    - Applies to all product write routes, and the customer/cart/order
+      routes for hygiene (the live frontend doesn't call those yet, so
+      they're lower urgency than products)
+    - Public sign-in stays open for customers - it only grants a session,
+      never write access to products. Whether to build the Order History
+      stretch goal on top of that is a separate, lower-stakes product
+      decision
+    - See `ecommerce-backend-api` README's Future Improvements for the
+      backend-side detail
 - [ ] Add products through a form, restricted to signed-in users
 - [ ] Order history
 
