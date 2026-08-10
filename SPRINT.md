@@ -31,7 +31,7 @@ show a total, alert on checkout, and navigate with React Router.
 - [x] **5. Render the product grid**
   - Products render from the live API, with visible loading and error states
 
-- [ ] **6. Add cart state**
+- [x] **6. Add cart state**
   - Adding the same product twice sets its quantity to 2 rather than duplicating it
 
 - [ ] **7. Add products to the cart from the grid**
