@@ -3,6 +3,7 @@ import { fetchProducts } from "../api/products";
 import useFetch from "../hooks/useFetch";
 import ProductGrid from "../components/products/ProductGrid";
 import CategoryTabs from "../components/products/CategoryTabs";
+import CategoryGrid from "../components/products/CategoryGrid";
 import Spinner from "../components/ui/Spinner";
 import "./Home.css";
 
@@ -34,6 +35,10 @@ const Home = () => {
         {/* Decorative - the headline and subtext already say everything the photo shows. */}
         <img src="/heroImg.png" alt="" className="home-hero-image" />
       </section>
+
+      {/* Tolerates loading with an empty array - tiles fall back to a
+          placeholder until real products arrive. */}
+      <CategoryGrid products={data?.products ?? []} />
 
       {/* Request status */}
       {loading && <Spinner />}
