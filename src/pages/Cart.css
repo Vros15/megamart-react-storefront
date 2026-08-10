@@ -1,0 +1,9 @@
+.cart-empty {
+  color: var(--color-text-muted);
+  padding: var(--space-xl) 0;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+}
