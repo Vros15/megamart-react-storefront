@@ -1,0 +1,46 @@
+.search-bar {
+  display: flex;
+  flex: 1 1 auto;
+  max-width: 32rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* Default focus outline is removed on the input itself and replaced here, on
+   the wrapper, so focus is still clearly visible rather than lost. */
+.search-bar:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.search-bar-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-body);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.search-bar-input:focus {
+  outline: none;
+}
+
+.search-bar-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search-bar-button {
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.search-bar-button:hover {
+  background-color: var(--color-primary-pressed);
+}
