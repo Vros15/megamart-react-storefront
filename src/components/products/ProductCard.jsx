@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { formatPrice } from "../../lib/format";
+import AddToCartButton from "./AddToCartButton";
 import "./ProductCard.css";
 
 // A card component that displays a single product, including its image, name, category, price, and stock status.
@@ -36,6 +37,8 @@ const ProductCard = ({ product }) => {
 
       {/* Display an out-of-stock message if the product is not available. */}
       {product.stock === 0 && <p className="product-card-out-of-stock">Out of stock</p>}
+
+      <AddToCartButton product={product} />
     </article>
   );
 };
