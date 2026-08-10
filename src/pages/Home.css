@@ -3,3 +3,84 @@
   text-align: center;
   padding: var(--space-xl) 0;
 }
+
+.home-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-xl) 0;
+}
+
+.home-hero-content {
+  flex: 1;
+}
+
+.home-hero-badge {
+  display: inline-block;
+  margin-bottom: var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-featured);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  font-size: var(--text-meta);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.home-hero-headline {
+  margin: 0 0 var(--space-sm);
+}
+
+.home-hero-subtext {
+  margin: 0 0 var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+.home-hero-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.home-hero-button-primary,
+.home-hero-button-secondary {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.home-hero-button-primary {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.home-hero-button-primary:hover {
+  background-color: var(--color-primary-pressed);
+  text-decoration: none;
+}
+
+.home-hero-button-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.home-hero-button-secondary:hover {
+  border-color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.home-hero-image {
+  flex: 1;
+  /* Flex items default to min-width: auto, which lets this image's intrinsic
+     1672px width win over flex-basis and overflow the container. min-width: 0
+     allows it to actually shrink to fit. */
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-fill);
+  border-radius: var(--radius);
+  object-fit: cover;
+}

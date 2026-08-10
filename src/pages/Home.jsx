@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { fetchProducts } from "../api/products";
 import useFetch from "../hooks/useFetch";
 import ProductGrid from "../components/products/ProductGrid";
@@ -13,9 +14,28 @@ const Home = () => {
     <>
       <CategoryTabs />
 
-      <h1>Shop MegaMart</h1>
+      <section className="home-hero">
+        <div className="home-hero-content">
+          <span className="home-hero-badge">*Back to School Season*</span>
+          <h1 className="home-hero-headline">
+            Modern essentials for work, home and everyday performance.
+          </h1>
+          <p className="home-hero-subtext">Six categories, twenty things worth owning.</p>
+          <div className="home-hero-actions">
+            {/* Both link to "/" for now - there's nothing to link to yet. */}
+            <Link to="/" className="home-hero-button-primary">
+              Shop the catalogue
+            </Link>
+            <Link to="/" className="home-hero-button-secondary">
+              Gaming setup
+            </Link>
+          </div>
+        </div>
+        {/* Decorative - the headline and subtext already say everything the photo shows. */}
+        <img src="/heroImg.png" alt="" className="home-hero-image" />
+      </section>
 
-       {/* Request status */}
+      {/* Request status */}
       {loading && <Spinner />}
 
       {error && (
@@ -23,7 +43,7 @@ const Home = () => {
           Could not load products: {error}
         </p>
       )}
-       {/* Product results - data.products is passed to the ProductGrid component */}
+      {/* Product results - data.products is passed to the ProductGrid component */}
       {data && <ProductGrid products={data.products} />}
     </>
   );
