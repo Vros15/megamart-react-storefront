@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="1240" viewBox="0 0 1400 1240">
+  <rect width="1400" height="1240" fill="#F8FAFC"/>
+  <text x="80" y="88" fill="#111827" font-family="DejaVu Sans, sans-serif" font-size="42" font-weight="700">MegaMart wordmark lockups</text>
+  <text x="80" y="126" fill="#64748B" font-family="DejaVu Sans, sans-serif" font-size="22">Vector paths extracted from the supplied branding PDF</text>
+
+  <g transform="translate(80 170)">
+    <rect width="1240" height="220" rx="22" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <text x="40" y="50" fill="#475569" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">PRIMARY LOCKUP</text>
+    <image x="40" y="76" width="760" height="118" preserveAspectRatio="xMinYMid meet" xlink:href="../png/primary/megamart-lockup-primary-1024.png"/>
+  </g>
+
+  <g transform="translate(80 420)">
+    <rect width="1240" height="220" rx="22" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <text x="40" y="50" fill="#475569" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">TWO-TONE WORDMARK</text>
+    <image x="40" y="78" width="760" height="112" preserveAspectRatio="xMinYMid meet" xlink:href="../png/two-tone/megamart-wordmark-two-tone-1024.png"/>
+  </g>
+
+  <g transform="translate(80 670)">
+    <rect width="1240" height="220" rx="22" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <text x="40" y="50" fill="#475569" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">BADGE LOCKUP</text>
+    <image x="40" y="76" width="760" height="118" preserveAspectRatio="xMinYMid meet" xlink:href="../png/badge/megamart-lockup-badge-1024.png"/>
+  </g>
+
+  <g transform="translate(80 920)">
+    <rect width="1240" height="220" rx="22" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="40" y="50" fill="#475569" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">REVERSED LOCKUP</text>
+    <image x="40" y="72" width="700" height="128" preserveAspectRatio="xMinYMid meet" xlink:href="../png/reversed/megamart-lockup-reversed-1024.png"/>
+  </g>
+
+  <text x="80" y="1196" fill="#64748B" font-family="DejaVu Sans, sans-serif" font-size="19">Primary Indigo #4F46E5  •  Midnight #111827  •  Amber #F59E0B</text>
+</svg>
