@@ -1,6 +1,7 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import useCart from "../../hooks/useCart";
 import logoMark from "../../assets/branding/megamart-mark-primary.svg";
+import SearchBar from "./SearchBar";
 import "./Header.css";
 
 const Header = () => {
@@ -19,12 +20,21 @@ const Header = () => {
         </span>
       </NavLink>
 
-      <nav>
-        <NavLink to="/" end>
-          Home
-        </NavLink>
+      <SearchBar />
+
+      <nav className="header-account-nav">
+        {/*
+          ToDO: Implement authentication and order history pages.
+        */}
+        <Link to="/sign-in" className="header-account-link">
+          Sign in
+        </Link>
+        <Link to="/orders" className="header-account-link">
+          Orders
+        </Link>
         <NavLink
           to="/cart"
+          className="header-account-link"
           aria-label={itemCount > 0 ? `Cart, ${itemCount} item${itemCount === 1 ? "" : "s"}` : "Cart"}
         >
           Cart
