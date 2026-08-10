@@ -1,6 +1,7 @@
 import { fetchProducts } from "../api/products";
 import useFetch from "../hooks/useFetch";
 import ProductGrid from "../components/products/ProductGrid";
+import CategoryTabs from "../components/products/CategoryTabs";
 import Spinner from "../components/ui/Spinner";
 import "./Home.css";
 
@@ -10,6 +11,8 @@ const Home = () => {
 
   return (
     <>
+      <CategoryTabs />
+
       <h1>Shop MegaMart</h1>
 
        {/* Request status */}

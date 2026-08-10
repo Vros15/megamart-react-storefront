@@ -1,0 +1,14 @@
+.category-tabs {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-sm) 0;
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.category-tab {
+  padding-bottom: var(--space-sm);
+  color: var(--color-text-muted);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
