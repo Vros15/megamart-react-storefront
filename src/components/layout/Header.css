@@ -1,3 +1,4 @@
+/* Header container */
 .header {
   display: flex;
   align-items: center;
@@ -7,36 +8,57 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Header container */
 .header-brand {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
+/* Header brand section */
 .header-brand:hover {
   text-decoration: none;
 }
 
+/* Brand mark in the header */
 .header-brand-mark {
   display: block;
 }
-
+/* Brand word in the header */
 .header-brand-word {
   font-family: var(--font-heading);
   font-size: var(--text-section);
   font-weight: 700;
 }
 
+/* "Mega" part of the brand word */
 .header-brand-word-mega {
   color: var(--color-primary);
 }
 
+/* "Mart" part of the brand word */
 .header-brand-word-mart {
   color: var(--color-text);
 }
 
+/* Navigation section in the header */
 .header nav {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+}
+/* Cart item count badge in the header */
+.header-cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  margin-left: var(--space-xs);
+  padding: 0 0.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: 999px;
+  font-size: var(--text-meta);
+  font-weight: 700;
 }
