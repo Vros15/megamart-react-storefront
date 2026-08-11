@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import useCart from "../../hooks/useCart";
 import logoMark from "../../assets/branding/megamart-mark-primary.svg";
 import SearchBar from "./SearchBar";
@@ -23,15 +24,25 @@ const Header = () => {
       <SearchBar />
 
       <nav className="header-account-nav">
-        {/*
-          ToDO: Implement authentication and order history pages.
-        */}
-        <Link to="/sign-in" className="header-account-link">
-          Sign in
-        </Link>
+        {/* ToDO: Implement order history page. */}
         <Link to="/orders" className="header-account-link">
           Orders
         </Link>
+        {/* Clerk authentication buttons */}
+        <SignedOut>
+          {/* SIGN IN BUTTON */}
+          <SignInButton mode="modal">
+            <button type="button" className="header-account-link">
+              Sign in
+            </button>
+          </SignInButton>
+        </SignedOut>
+        
+        <SignedIn>
+          {/* USER BUTTON */}
+          <UserButton />
+        </SignedIn>
+
         <NavLink
           to="/cart"
           className="header-account-link"
