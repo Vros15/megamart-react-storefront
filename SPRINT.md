@@ -45,32 +45,47 @@ show a total, alert on checkout, and navigate with React Router.
 
 ---
 
-## Sprint 2 - Phase 2
+## Sprint 2a - Admin Write Access (Clerk)
 
-Planned after Sprint 1 is complete. Ordered by value relative to effort.
+The API's write routes (products, customers, carts, orders) were locked to a
+single admin account on 2026-08-10 - confirmed live via Postman, not just
+planned (`POST /api/products` with no token now returns `401`, reads are
+unaffected). Full API reference, architecture, and rationale:
+`docs/tasks/admin-clerk-storefront.md`.
+
+Deliberately narrower than "any signed-in user can write" - this is a public
+portfolio demo, and the goal is stopping a stranger from deleting the
+catalogue, not building general-purpose role management. One hardcoded
+`ADMIN_USER_ID`, not a roles system.
+
+- [ ] **1. Install Clerk React SDK**
+  - `VITE_CLERK_PUBLISHABLE_KEY` set in `.env.local` (gitignored - this repo
+    intentionally has no `.env.example`)
+- [ ] **2. Wrap the app in `ClerkProvider`**
+  - Storefront still renders and reads still work while signed out; nothing
+    visible changes yet
+- [ ] **3. Add sign in / sign out to the header**
+  - Signed out shows Clerk's sign-in; signed in shows the user button
+- [ ] **4. Attach the Clerk token to write requests**
+  - `useAdminApi` fetches a fresh token per write call and never caches one -
+    Clerk tokens expire in roughly 60 seconds
+- [ ] **5. Add the admin product screen**
+  - `/admin` - a signed-out or non-admin visitor cannot write; the one admin
+    account can create, edit, and delete products. The client-side gate is
+    cosmetic - the API's `403` is the real boundary
+- [ ] **6. Document Clerk setup**
+  - README explains the env var and that this repo must use the same Clerk
+    instance as the API
+
+---
+
+## Sprint 2b - Phase 2
+
+Planned after Sprint 2a is complete. Ordered by value relative to effort.
 
 - [ ] Search, filter, and sort, wired to the API query parameters
 - [ ] Custom hooks and wrapper components for repeated logic and layout
 - [ ] Product detail pages at `/products/:id`
-- [ ] Clerk authentication, with the API verifying tokens rather than only the UI
-  - Confirmed 2026-08-10 via Postman: `POST`/`PUT`/`DELETE` on `/api/products`
-    currently accept requests from anyone, no token required
-  - **Design decision (2026-08-10):** product management is restricted to a
-    single admin account, not "any signed-in user." This project is a public
-    portfolio demo - the goal is stopping a stranger from deleting the
-    catalog, not building general-purpose role management.
-    - Backend: `requireAuth()` (Clerk) + a `requireAdmin` middleware that
-      compares the token's user ID against an `ADMIN_USER_ID` env var
-    - Applies to all product write routes, and the customer/cart/order
-      routes for hygiene (the live frontend doesn't call those yet, so
-      they're lower urgency than products)
-    - Public sign-in stays open for customers - it only grants a session,
-      never write access to products. Whether to build the Order History
-      stretch goal on top of that is a separate, lower-stakes product
-      decision
-    - See `ecommerce-backend-api` README's Future Improvements for the
-      backend-side detail
-- [ ] Add products through a form, restricted to signed-in users
 - [ ] Order history
 
 ---
