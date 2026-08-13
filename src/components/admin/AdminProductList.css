@@ -1,0 +1,67 @@
+.admin-product-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* flex-wrap, not a literal <table> - at narrow widths price/stock drop to
+   their own line instead of forcing horizontal scroll. */
+.admin-product-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-product-row-image-well {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-fill);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.admin-product-row-image,
+.admin-product-row-image-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-product-row-details {
+  flex: 1;
+  min-width: 120px;
+}
+
+.admin-product-row-name {
+  margin: 0;
+  font-size: var(--text-ui);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.admin-product-row-category {
+  margin: var(--space-xs) 0 0;
+  font-size: var(--text-meta);
+  color: var(--color-text-muted);
+}
+
+.admin-product-row-price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.admin-product-row-stock {
+  font-size: var(--text-meta);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.admin-product-list-empty {
+  color: var(--color-text-muted);
+  padding: var(--space-xl) 0;
+}
