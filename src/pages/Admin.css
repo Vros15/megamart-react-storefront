@@ -1,0 +1,4 @@
+.admin-gate-message {
+  color: var(--color-text-muted);
+  padding: var(--space-xl) 0;
+}
