@@ -50,29 +50,34 @@ show a total, alert on checkout, and navigate with React Router.
 The API's write routes (products, customers, carts, orders) were locked to a
 single admin account on 2026-08-10 - confirmed live via Postman, not just
 planned (`POST /api/products` with no token now returns `401`, reads are
-unaffected). Full API reference, architecture, and rationale:
-`docs/tasks/admin-clerk-storefront.md`.
+unaffected).
 
 Deliberately narrower than "any signed-in user can write" - this is a public
 portfolio demo, and the goal is stopping a stranger from deleting the
 catalogue, not building general-purpose role management. One hardcoded
 `ADMIN_USER_ID`, not a roles system.
 
-- [ ] **1. Install Clerk React SDK**
+- [x] **1. Install Clerk React SDK**
   - `VITE_CLERK_PUBLISHABLE_KEY` set in `.env.local` (gitignored - this repo
     intentionally has no `.env.example`)
-- [ ] **2. Wrap the app in `ClerkProvider`**
+- [x] **2. Wrap the app in `ClerkProvider`**
   - Storefront still renders and reads still work while signed out; nothing
     visible changes yet
-- [ ] **3. Add sign in / sign out to the header**
+- [x] **3. Add sign in / sign out to the header**
   - Signed out shows Clerk's sign-in; signed in shows the user button
-- [ ] **4. Attach the Clerk token to write requests**
+- [x] **4. Attach the Clerk token to write requests**
   - `useAdminApi` fetches a fresh token per write call and never caches one -
     Clerk tokens expire in roughly 60 seconds
-- [ ] **5. Add the admin product screen**
-  - `/admin` - a signed-out or non-admin visitor cannot write; the one admin
-    account can create, edit, and delete products. The client-side gate is
-    cosmetic - the API's `403` is the real boundary
+- [ ] **5. Add the admin product screen** - `/admin`, the one admin account
+      can create, edit, and delete products. The client-side gate decides
+      what renders; the API's `403` is the real boundary
+  - [x] **5.1 Admin route with access gate** - signed-out, non-admin, and
+        admin states, no product management yet
+  - [ ] **5.2 Admin product list** - read-only, reuses `fetchProducts`
+  - [ ] **5.3 Product form component** - one reusable form for create and
+        edit, category dropdown matching the API's six values
+  - [ ] **5.4 Wire create and edit into the admin screen**
+  - [ ] **5.5 Delete with confirmation**
 - [ ] **6. Document Clerk setup**
   - README explains the env var and that this repo must use the same Clerk
     instance as the API
