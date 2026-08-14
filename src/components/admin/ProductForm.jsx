@@ -13,7 +13,7 @@ import "./ProductForm.css";
  * nothing changed, onSubmit is never called - there is nothing to save, and
  * no reason to make a request for it.
  */
-const ProductForm = ({ initialValues, onSubmit, submitLabel = "Save" }) => {
+const ProductForm = ({ initialValues, onSubmit, submitLabel = "Save", disabled = false }) => {
   const isEditing = !!initialValues;
 
   // Form state and validation errors
@@ -226,7 +226,7 @@ const ProductForm = ({ initialValues, onSubmit, submitLabel = "Save" }) => {
         </p>
       </div>
 
-      <button type="submit" className="product-form-submit">
+      <button type="submit" className="product-form-submit" disabled={disabled}>
         {submitLabel}
       </button>
     </form>

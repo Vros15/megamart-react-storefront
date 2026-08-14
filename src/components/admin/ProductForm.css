@@ -82,3 +82,9 @@
 .product-form-submit:hover {
   background-color: var(--color-primary-pressed);
 }
+
+.product-form-submit:disabled {
+  background-color: var(--color-fill);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
