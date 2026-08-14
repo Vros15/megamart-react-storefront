@@ -1,33 +1,30 @@
 import { useUser } from "@clerk/clerk-react";
-import { fetchProducts } from "../api/products";
-import useFetch from "../hooks/useFetch";
+import useAdminApi from "../hooks/useAdminApi";
 import { ADMIN_USER_ID } from "../lib/constants";
-import AdminProductList from "../components/admin/AdminProductList";
+import AdminDashboard from "../components/admin/AdminDashboard";
 import Spinner from "../components/ui/Spinner";
 import "./Admin.css";
 
 /**
  * Three states, in order: still loading Clerk's auth check, signed out, and
  * signed in but not the admin. Only the fourth case - signed in as the one
- * admin account - reaches product management.
+ * admin account - reaches product management, delegated entirely to
+ * AdminDashboard.
  *
  * The API's 403 (checked against the same ADMIN_USER_ID, server-side) is
- * what actually stops a write.
+ * what actually stops a write - this gate only decides what renders.
  *
- * useFetch runs unconditionally, before any of the gate's early returns -
- * React requires every hook to run on every render, so it can't sit inside
- * the admin-only branch below. The fetch itself is harmless either way; GET
- * is public and this is the same request Home already makes for everyone.
+ * useAdminApi runs unconditionally, before any of the gate's early returns -
+ * React requires every hook to run on every render.
  */
 const Admin = () => {
   const { isLoaded, isSignedIn, user } = useUser();
-  // Fetch the list of products using the custom useFetch hook. This runs regardless of the user's admin status.
-  const { data, loading, error } = useFetch(fetchProducts);
+  const { write } = useAdminApi();
 
   if (!isLoaded) {
     return <Spinner />;
   }
-  // If the user is not signed in, show a message prompting them to sign in.
+
   if (!isSignedIn) {
     return (
       <>
@@ -37,7 +34,6 @@ const Admin = () => {
     );
   }
 
-  // If the user is signed in but is not the admin, show a message indicating they cannot manage products.
   if (user.id !== ADMIN_USER_ID) {
     return (
       <>
@@ -46,16 +42,11 @@ const Admin = () => {
       </>
     );
   }
-  // If the user is signed in as the admin, render the product management interface.
+
   return (
     <>
       <h1>Admin</h1>
-
-      {loading && <Spinner />}
-
-      {error && <p className="admin-gate-message">Could not load products: {error}</p>}
-      {/* Render the list of products if available from the API. */}
-      {data && <AdminProductList products={data.products} />}
+      <AdminDashboard write={write} />
     </>
   );
 };
