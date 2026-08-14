@@ -1,15 +1,22 @@
 import { Link } from "react-router";
 import { fetchProducts } from "../api/products";
 import useFetch from "../hooks/useFetch";
+import { MAX_PRODUCTS_LIMIT } from "../lib/constants";
 import ProductGrid from "../components/products/ProductGrid";
 import CategoryTabs from "../components/products/CategoryTabs";
 import CategoryGrid from "../components/products/CategoryGrid";
 import Spinner from "../components/ui/Spinner";
 import "./Home.css";
 
+// Defined once at module scope, not inline in the component - useFetch's
+// effect depends on this reference, and a new function every render would
+// refetch every render. Requests the API's max rather than the unset
+// default of 20, so products past the 20th don't silently disappear.
+const fetchAllProducts = () => fetchProducts({ limit: MAX_PRODUCTS_LIMIT });
+
 const Home = () => {
   // Fetch products and track the request state.
-  const { data, loading, error } = useFetch(fetchProducts);
+  const { data, loading, error } = useFetch(fetchAllProducts);
 
   return (
     <>
