@@ -1,0 +1,84 @@
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 28rem;
+}
+
+.product-form-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.product-form-row .product-form-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.product-form-field label {
+  font-size: var(--text-ui);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.product-form-field input,
+.product-form-field textarea,
+.product-form-field select {
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: var(--text-body);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.product-form-field input:focus,
+.product-form-field textarea:focus,
+.product-form-field select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.product-form-field textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.product-form-field input[aria-invalid="true"],
+.product-form-field textarea[aria-invalid="true"],
+.product-form-field select[aria-invalid="true"] {
+  border-color: var(--color-urgency);
+}
+
+.product-form-error {
+  margin: 0;
+  color: var(--color-urgency);
+  font-size: var(--text-meta);
+}
+
+.product-form-hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-meta);
+}
+
+.product-form-submit {
+  align-self: flex-start;
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.product-form-submit:hover {
+  background-color: var(--color-primary-pressed);
+}
