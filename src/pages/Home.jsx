@@ -28,7 +28,7 @@ const Home = () => {
           <h1 className="home-hero-headline">
             Modern essentials for work, home and everyday performance.
           </h1>
-          <p className="home-hero-subtext">Six categories, twenty things worth owning.</p>
+          <p className="home-hero-subtext">Six categories, everything you need for work, home, and play.</p>
           <div className="home-hero-actions">
             {/* Both link to "/" for now - there's nothing to link to yet. */}
             <Link to="/" className="home-hero-button-primary">
