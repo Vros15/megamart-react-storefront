@@ -1,4 +1,10 @@
 .admin-gate-message {
   color: var(--color-text-muted);
   padding: var(--space-xl) 0;
+  text-align: center;
+}
+
+.admin-gate-message a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
 }

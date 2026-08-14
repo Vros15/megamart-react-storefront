@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/clerk-react";
+import { Link } from "react-router";
 import useAdminApi from "../hooks/useAdminApi";
 import { ADMIN_USER_ID } from "../lib/constants";
 import AdminDashboard from "../components/admin/AdminDashboard";
@@ -28,8 +29,8 @@ const Admin = () => {
   if (!isSignedIn) {
     return (
       <>
-        <h1>Admin</h1>
-        <p className="admin-gate-message">Sign in to manage products.</p>
+        <h1 className="admin-gate-message">Are you signed in?</h1>
+        <p className="admin-gate-message"> <Link to="/">Go Back Home</Link></p>
       </>
     );
   }
@@ -37,7 +38,7 @@ const Admin = () => {
   if (user.id !== ADMIN_USER_ID) {
     return (
       <>
-        <h1>Admin</h1>
+        <h1 className="admin-gate-message">Sorry!</h1>
         <p className="admin-gate-message">This account cannot manage products.</p>
       </>
     );
@@ -45,7 +46,7 @@ const Admin = () => {
 
   return (
     <>
-      <h1>Admin</h1>
+      <h1 className="admin-gate-message">Admin Panel</h1>
       <AdminDashboard write={write} />
     </>
   );
