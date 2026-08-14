@@ -73,12 +73,12 @@ catalogue, not building general-purpose role management. One hardcoded
       what renders; the API's `403` is the real boundary
   - [x] **5.1 Admin route with access gate** - signed-out, non-admin, and
         admin states, no product management yet
-  - [ ] **5.2 Admin product list** - read-only, reuses `fetchProducts`
-  - [ ] **5.3 Product form component** - one reusable form for create and
+  - [x] **5.2 Admin product list** - read-only, reuses `fetchProducts`
+  - [x] **5.3 Product form component** - one reusable form for create and
         edit, category dropdown matching the API's six values
-  - [ ] **5.4 Wire create and edit into the admin screen**
+  - [x] **5.4 Wire create and edit into the admin screen**
   - [ ] **5.5 Delete with confirmation**
-- [ ] **6. Document Clerk setup**
+- [x] **6. Document Clerk setup**
   - README explains the env var and that this repo must use the same Clerk
     instance as the API
 
