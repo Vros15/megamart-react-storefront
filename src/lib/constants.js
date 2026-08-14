@@ -8,3 +8,6 @@ export const API_BASE_URL =
 // Anyone can edit client-side JavaScript, so the API's own 403 (checked
 // against the same ID, server-side) is the real gate.
 export const ADMIN_USER_ID = "user_3HkeVubl3lmYiO4Ie1aYYkw5kfj";
+
+// The API's own hard cap on `limit` Fetching without a limit defaults to 20 - fine when the catalogue was 20 products.
+export const MAX_PRODUCTS_LIMIT = 100;
