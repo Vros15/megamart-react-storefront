@@ -138,9 +138,27 @@ h2 {
   padding-inline: var(--space-md);
 }
 
+/* Adds bottom padding to the container on mobile to avoid overlap with the fixed mobile tab bar */
+@media (max-width: 640px) {
+  .container {
+    padding-bottom: calc(var(--space-xl) + 56px);
+  }
+}
+
 /* Digits share one width, so prices in a column line up on the decimal. */
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* Icon sizing for inline SVG icons */
+.icon {
+  display: inline-flex;
+}
+
+.icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
 }
 
 /* Hides content visually while leaving it available to screen readers. */
