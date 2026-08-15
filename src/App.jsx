@@ -1,11 +1,20 @@
+import { useEffect } from 'react'
 import { Routes, Route } from 'react-router'
 import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
+import useAnalytics from './hooks/useAnalytics'
+import { initAnalytics } from './lib/analytics'
 
 function App() {
+  useEffect(() => {
+    initAnalytics()
+  }, [])
+
+  useAnalytics()
+
   return (
     <Routes>
       <Route element={<Layout />}>

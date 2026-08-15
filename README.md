@@ -152,11 +152,17 @@ Requires a `.env.local` (gitignored, not committed, see `.gitignore`) with:
 ```bash
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
 VITE_API_URL=https://ecommerce-backend-api-dusky.vercel.app/api   # optional, this is the default
+VITE_GA_MEASUREMENT_ID=G-...   # optional, Google Analytics
 ```
 
 The Clerk key must come from the **same Clerk instance** the backend API
 validates tokens against, a key from a different instance will produce
 tokens the API correctly rejects as unauthenticated.
+
+`VITE_GA_MEASUREMENT_ID` loads `gtag.js` and sends a `page_view` event on
+every route change, since a single-page app only fires one real page load
+(`src/lib/analytics.js`). Leaving it unset skips loading the script entirely,
+so local development never sends real traffic to an analytics property.
 
 ### Scripts
 
