@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import useCart from "../../hooks/useCart";
-import useToast from "../../hooks/useToast";
 import "./AddToCartButton.css";
 
 /**
@@ -16,7 +15,6 @@ import "./AddToCartButton.css";
  */
 const AddToCartButton = ({ product }) => {
   const { dispatch } = useCart();
-  const { showToast } = useToast();
   const [justAdded, setJustAdded] = useState(false);
   const timeoutRef = useRef(null);
   const outOfStock = product.stock === 0;
@@ -25,7 +23,6 @@ const AddToCartButton = ({ product }) => {
 
   const handleClick = () => {
     dispatch({ type: "ADD_ITEM", payload: product });
-    showToast(`Added "${product.name}" to cart`);
 
     clearTimeout(timeoutRef.current);
     setJustAdded(true);
