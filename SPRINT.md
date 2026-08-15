@@ -68,7 +68,7 @@ catalogue, not building general-purpose role management. One hardcoded
 - [x] **4. Attach the Clerk token to write requests**
   - `useAdminApi` fetches a fresh token per write call and never caches one -
     Clerk tokens expire in roughly 60 seconds
-- [ ] **5. Add the admin product screen** - `/admin`, the one admin account
+- [x] **5. Add the admin product screen** - `/admin`, the one admin account
       can create, edit, and delete products. The client-side gate decides
       what renders; the API's `403` is the real boundary
   - [x] **5.1 Admin route with access gate** - signed-out, non-admin, and
@@ -77,7 +77,7 @@ catalogue, not building general-purpose role management. One hardcoded
   - [x] **5.3 Product form component** - one reusable form for create and
         edit, category dropdown matching the API's six values
   - [x] **5.4 Wire create and edit into the admin screen**
-  - [ ] **5.5 Delete with confirmation**
+  - [x] **5.5 Delete with confirmation**
 - [x] **6. Document Clerk setup**
   - README explains the env var and that this repo must use the same Clerk
     instance as the API

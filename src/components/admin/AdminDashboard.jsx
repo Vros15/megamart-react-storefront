@@ -38,6 +38,7 @@ const AdminDashboard = ({ write }) => {
   const [formTarget, setFormTarget] = useState(null);
   const [actionError, setActionError] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   const isCreating = formTarget === "create";
 
@@ -57,6 +58,21 @@ const AdminDashboard = ({ write }) => {
       setActionError(describeWriteError(err));
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Confirmation already happened in AdminProductList before this is called.
+  const handleDelete = async (product) => {
+    setDeletingId(product.id);
+    setActionError(null);
+
+    try {
+      await write("DELETE", `/products/${product.id}`);
+      refetch();
+    } catch (err) {
+      setActionError(describeWriteError(err));
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -92,8 +108,15 @@ const AdminDashboard = ({ write }) => {
       {loading && <Spinner />}
 
       {error && <p className="admin-dashboard-message">Could not load products: {error}</p>}
-
-      {data && !formTarget && <AdminProductList products={data.products} onEdit={setFormTarget} />}
+      {/* AdminProductList displays the list of products for management purposes */}
+      {data && !formTarget && (
+        <AdminProductList
+          products={data.products}
+          onEdit={setFormTarget}
+          onDelete={handleDelete}
+          deletingId={deletingId}
+        />
+      )}
     </>
   );
 };

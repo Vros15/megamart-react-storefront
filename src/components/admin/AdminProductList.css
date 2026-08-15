@@ -79,3 +79,24 @@
 .admin-product-row-edit:hover {
   border-color: var(--color-text-muted);
 }
+
+.admin-product-row-delete {
+  padding: var(--space-xs) var(--space-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: var(--text-meta);
+  font-weight: 600;
+}
+
+.admin-product-row-delete:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+.admin-product-row-edit:disabled,
+.admin-product-row-delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
