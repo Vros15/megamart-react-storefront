@@ -7,7 +7,7 @@ Built to for Ecommerce webpages (fetch products, cart, checkout, routing),
 extended past the brief to a full storefront with its own backend and a real
 authenticated admin panel.
 
-Live demo: *TBD*
+Live demo: <https://megamart-react-storefront.vercel.app>
 Backend API repo: <https://github.com/Vros15/ecommerce-backend-api>
 
 ---
@@ -18,8 +18,6 @@ Backend API repo: <https://github.com/Vros15/ecommerce-backend-api>
   loading and error states
 - Cart: add, quantity merges automatically on a repeat add, live total,
   checkout
-- Persistent header with cart count badge, search bar (UI in place, not yet
-  wired to the API), category tabs
 - Clerk authentication: sign in / sign out from the header
 - `/admin`: gated to a single admin account. Create, edit, and delete
   products against the live database, with server-side enforcement — not
@@ -41,7 +39,7 @@ Backend API repo: <https://github.com/Vros15/ecommerce-backend-api>
 | Linting | oxlint | Faster than ESLint, sufficient for a project this size |
 
 No test framework is wired up yet. Everything in this repo has been verified
-against the live API and a real browser session instead  see
+against the live API and a real browser session instead see
 [How this was verified](#how-this-was-verified).
 
 ---
@@ -51,15 +49,19 @@ against the live API and a real browser session instead  see
 ```text
 src/
 ├── api/
-│   └── products.js          fetchProducts, fetchProductById normalizes
+│   └── products.js          fetchProducts, fetchProductById — normalizes
 │                             the API's Mongo shape (_id → id) once, here,
 │                             so no component ever sees a database detail
+├── assets/
+│   ├── branding/              logo mark
+│   └── nav-icons/              Lucide-style SVGs, injected inline so their
+│                               currentColor stroke can be tinted by CSS
 ├── components/
-│   ├── layout/               Header, SearchBar, Layout (persistent shell)
+│   ├── layout/               Header (desktop nav + mobile tab bar), SearchBar
 │   ├── products/              ProductGrid, ProductCard, CategoryTabs/Grid
 │   ├── cart/                  CartItem, CartSummary
 │   ├── admin/                 AdminDashboard, AdminProductList, ProductForm
-│   └── ui/                    Spinner, ImageWithFallback no domain knowledge
+│   └── ui/                    Spinner, ImageWithFallback, Icon no domain knowledge
 ├── context/
 │   ├── CartContext.jsx        the provider
 │   └── cartReducer.js         state transitions as a plain function,
@@ -120,6 +122,22 @@ password storage are exactly the kind of thing worth not building yourself.
 Tokens expire in roughly 60 seconds, so `useAdminApi` fetches a fresh one on
 every write rather than caching it.
 
+**A fixed bottom tab bar on mobile, not a hamburger menu.** The original
+header squeezed a logo, a full search bar, and three nav links onto one line
+— on a phone, the search bar (the only flexible element) just got crushed.
+Two other approaches were tried and dropped before this one: a hamburger menu
+for Orders/sign-in freed up some width but not enough to matter without also
+shrinking the search bar to an icon, and a toast notification on "Add to
+Cart" ended up feeling redundant once the bottom bar's Cart badge already
+updates live. The bottom bar mirrors Amazon's mobile app pattern for the same
+reason they use it primary actions (Home, Orders, Account, Cart) stay
+reachable with one tap regardless of scroll position, without competing with
+the header for width. Icons are real SVG assets injected inline
+(`src/components/ui/Icon.jsx`) rather than an `<img>`, specifically so their
+`stroke="currentColor"` can inherit whatever color the tab's CSS sets —
+that's what lets the active tab tint itself from one rule, using
+react-router's own active-route detection instead of extra state.
+
 ---
 
 ## Getting started
@@ -167,6 +185,9 @@ in this repo was checked against real data instead of assumed correct:
   going invisible on both the storefront and the admin list) was caught from
   real usage, root-caused against the live API's actual response, and fixed
   see `MAX_PRODUCTS_LIMIT` in `src/lib/constants.js`
+- The mobile layout checked at 375px and 1280px: no horizontal overflow at
+  either width, the search bar and account nav swap correctly at the
+  breakpoint, and the active tab bar item follows the actual route
 
 ---
 
@@ -176,7 +197,6 @@ Full task-by-task plan and status: [`SPRINT.md`](./SPRINT.md).
 
 Short version- What's planned next:
 
-- Delete with confirmation in the admin panel
 - Search, filter, and sort wired to the API's query parameters
 - Product detail pages (`/products/:id`)
 - Order history

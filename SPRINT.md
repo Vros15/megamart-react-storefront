@@ -11,7 +11,7 @@ API base: `https://ecommerce-backend-api-dusky.vercel.app/api/products`
 
 ## Sprint 1 - Core Application
 
-Covers the full assignment brief: fetch products, add to cart, track quantity,
+Covers the core feature set: fetch products, add to cart, track quantity,
 show a total, alert on checkout, and navigate with React Router.
 
 - [x] **1. Scaffold project and remove Vite boilerplate**
@@ -84,9 +84,38 @@ catalogue, not building general-purpose role management. One hardcoded
 
 ---
 
-## Sprint 2b - Phase 2
+## Sprint 2b - Mobile Navigation
 
-Planned after Sprint 2a is complete. Ordered by value relative to effort.
+Landed ahead of Sprint 2c - the header worked at desktop widths and squeezed
+at phone widths, a logo, full search bar, and three nav links on one line
+left the search bar (the only flexible element) with almost no room.
+
+Two approaches were tried and dropped before landing on the third:
+
+- A hamburger menu for Orders/sign-in freed up some width, but not enough to
+  matter without also shrinking the search bar to an icon - more interactive
+  surface than the problem justified for a nav that's currently two links.
+- A toast notification on "Add to Cart" was built and verified, then pulled
+  once the fixed bottom bar's own Cart badge made it feel redundant.
+
+- [x] **1. Checkmark + toast feedback on Add to Cart**
+  - Button morphs to a drawn checkmark on click, no toast (removed - see above)
+- [x] **2. Fixed bottom tab bar on mobile** - Home, Orders, Account, Cart,
+      replacing the squeezed header nav below the breakpoint
+  - Page content gets bottom padding so nothing sits hidden behind it
+- [x] **3. Search bar scoped to the home page, wraps full-width on mobile**
+  - No search bar on `/cart` or `/admin`; wraps to its own row instead of
+    shrinking, so the input stays usable at phone widths
+- [x] **4. Real SVG icon set with active-tab tinting**
+  - Icons injected inline (`src/components/ui/Icon.jsx`) so `currentColor`
+    lets the active tab tint itself from one CSS rule, driven by
+    react-router's own active-route detection
+
+---
+
+## Sprint 2c - Phase 2
+
+Up next. Ordered by value relative to effort.
 
 - [ ] Search, filter, and sort, wired to the API query parameters
 - [ ] Custom hooks and wrapper components for repeated logic and layout
@@ -95,120 +124,39 @@ Planned after Sprint 2a is complete. Ordered by value relative to effort.
 
 ---
 
-## Planned Folder Structure
+## Sprint 3 - Payments (Stripe)
 
-The target layout. Directories are created as the task that needs them lands,
-rather than up front, since git does not track empty directories and placeholder
-files cannot be reviewed.
+Planned. Integrate Stripe's API in test mode to generate fake transactions,
+not real charges, matching this project's portfolio-demo scope (see the
+`ADMIN_USER_ID` reasoning in Sprint 2a for the same "solve the actual
+problem, not the general one" approach).
 
-```text
-src/
-├── api/
-│   ├── products.js          fetchProducts, fetchProductById
-│   └── orders.js            added with order history
-├── components/
-│   ├── layout/
-│   │   ├── Layout.jsx       header, <Outlet />, footer
-│   │   ├── Layout.css
-│   │   ├── Header.jsx       brand, nav, cart badge, account menu
-│   │   ├── Header.css
-│   │   ├── Footer.jsx
-│   │   └── Footer.css
-│   ├── products/
-│   │   ├── ProductGrid.jsx  the list and its empty state
-│   │   ├── ProductGrid.css
-│   │   ├── ProductCard.jsx  one product
-│   │   ├── ProductCard.css
-│   │   └── AddToCartButton.jsx
-│   ├── cart/
-│   │   ├── CartItem.jsx     one line with quantity controls
-│   │   ├── CartItem.css
-│   │   ├── CartSummary.jsx  totals and checkout
-│   │   └── CartSummary.css
-│   ├── auth/
-│   │   └── ProtectedRoute.jsx
-│   └── ui/
-│       ├── Button.jsx
-│       ├── Button.css
-│       ├── Spinner.jsx
-│       ├── Spinner.css
-│       ├── EmptyState.jsx
-│       └── EmptyState.css
-├── context/
-│   ├── CartContext.jsx      the provider
-│   └── cartReducer.js       state transitions, no React involved
-├── hooks/
-│   ├── useCart.js           reads CartContext
-│   └── useFetch.js          loading, error, and data
-├── lib/
-│   ├── constants.js         API base URL
-│   └── format.js            price formatting, image fallback
-├── pages/
-│   ├── Home.jsx
-│   ├── Home.css
-│   ├── Cart.jsx
-│   ├── Cart.css
-│   ├── ProductDetail.jsx    Sprint 2
-│   ├── SignIn.jsx           Sprint 2
-│   ├── SignUp.jsx           Sprint 2
-│   ├── Profile.jsx          Sprint 2
-│   ├── Orders.jsx           Sprint 2
-│   └── NotFound.jsx
-├── App.jsx                  route definitions
-├── main.jsx                 providers and router
-└── index.css                global: reset, tokens, base elements, .container
-```
-
-### Why it is arranged this way
-
-**`pages/` versus `components/`** is the routing boundary. A page maps to a URL
-and composes components. Nothing inside `components/` should know which route it
-is rendered on.
-
-**`components/` is grouped by feature.** A flat folder works up to roughly six
-components; this app will hold more. `ui/` is reserved for components with no
-domain knowledge, so a `Button` never learns what a product is.
-
-**`AddToCartButton` is separate from `ProductCard`** because the product detail
-page needs the same behaviour. Shared behaviour belongs in a hook or a shared
-component, not duplicated across two callers.
-
-**`cartReducer.js` is split from `CartContext.jsx`** so the state transitions
-stay a plain function, testable without rendering anything.
-
-**`ProtectedRoute` wraps routes rather than pages checking auth themselves**, so
-the signed-in requirement is declared once in the route table.
+- [ ] 1. Add Stripe test-mode keys (`STRIPE_SECRET_KEY` on the backend,
+      `VITE_STRIPE_PUBLISHABLE_KEY` on the frontend), gitignored like the
+      Clerk keys
+- [ ] 2. Backend: an endpoint that creates a Stripe Checkout Session (or
+      Payment Intent) for a cart's total, test mode only
+- [ ] 3. Frontend: replace the checkout `alert()` with a real Stripe
+      Checkout redirect (or Stripe Elements), using Stripe's published test
+      card numbers
+- [ ] 4. Wire a successful payment into the existing order flow (`POST
+      /api/orders/:customer`), so a completed checkout actually produces an
+      order, not just a cleared cart
+- [ ] 5. Document how to trigger a fake transaction safely: test mode keys
+      only, Stripe's test card numbers, no path to a real charge
 
 ---
 
-## Routing Shape
+## Folder Structure, Routing, and Styling
 
-`Layout` renders persistently and pages swap inside its `<Outlet />`, so the
-header does not remount on navigation.
-
-```jsx
-<Routes>
-  <Route element={<Layout />}>
-    <Route path="/" element={<Home />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="*" element={<NotFound />} />
-  </Route>
-</Routes>
-```
-
----
-
-## Styling
-
-Plain CSS, no framework.
-
-- `src/index.css` is the global stylesheet: reset, `:root` custom properties for
-  colour and spacing, base element styles, and shared utilities such as
-  `.container`.
-- Each component keeps a stylesheet beside it, imported by that component.
-- **Class names are prefixed with the component name.** Importing a stylesheet
-  inside a component does not scope it - Vite bundles all CSS together and every
-  class is global. `.header-nav` and `.product-card-title` rather than `.nav` and
-  `.title`.
+This was a Sprint 1-era planned layout, written before Sprint 2a and the
+mobile work landed and diverged from it - no `Footer.jsx` or
+`ProtectedRoute.jsx` were built, Clerk's own components are used directly
+instead, and `admin/`/`ui/Icon.jsx` weren't anticipated at all. Rather than
+maintain two versions of the same map, the current, accurate structure lives
+in the README: see [Architecture](./README.md#architecture) for the real
+folder layout and the reasoning behind it, and
+[Key design decisions](./README.md#key-design-decisions) for styling and
+routing choices.
 
 This may be revisited once the project is complete.
