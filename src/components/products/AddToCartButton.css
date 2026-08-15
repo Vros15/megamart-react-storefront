@@ -1,4 +1,8 @@
 .add-to-cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
   width: 100%;
   margin-top: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
@@ -9,6 +13,7 @@
   font-family: var(--font-body);
   font-size: var(--text-ui);
   font-weight: 600;
+  transition: background-color 0.2s ease;
 }
 
 .add-to-cart-button:hover:not(:disabled) {
@@ -19,4 +24,33 @@
   background-color: var(--color-fill);
   color: var(--color-text-muted);
   cursor: not-allowed;
+}
+
+.add-to-cart-button--added {
+  background-color: var(--color-success);
+  animation: add-to-cart-pulse 0.35s ease;
+}
+
+.add-to-cart-check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: add-to-cart-draw 0.3s ease forwards;
+}
+
+@keyframes add-to-cart-pulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes add-to-cart-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
