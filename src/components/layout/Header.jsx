@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import useCart from "../../hooks/useCart";
+import useIsAdmin from "../../hooks/useIsAdmin";
 import logoMark from "../../assets/branding/megamart-mark-primary.svg";
 import SearchBar from "./SearchBar";
 import Icon from "../ui/Icon";
@@ -8,13 +9,14 @@ import homeIcon from "../../assets/nav-icons/home.svg?raw";
 import ordersIcon from "../../assets/nav-icons/orders.svg?raw";
 import cartIcon from "../../assets/nav-icons/cart.svg?raw";
 import signInIcon from "../../assets/nav-icons/sign-in.svg?raw";
+import browseIcon from "../../assets/nav-icons/browse.svg?raw";
 import "./Header.css";
 
 const Header = () => {
   const { state } = useCart();
   const { pathname } = useLocation();
+  const isAdmin = useIsAdmin();
   // Sum of quantities, not items.length - two units of one product should
-  // show 2, not 1.
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
   const cartLabel = itemCount > 0 ? `Cart, ${itemCount} item${itemCount === 1 ? "" : "s"}` : "Cart";
   const isHome = pathname === "/";
@@ -102,6 +104,14 @@ const Header = () => {
           </span>
           <span>Cart</span>
         </NavLink>
+
+        {/* Admin link, only shown if the user is an admin. */}
+        {isAdmin && (
+          <NavLink to="/admin" className="mobile-tab-bar-item">
+            <Icon svg={browseIcon} />
+            <span>Admin</span>
+          </NavLink>
+        )}
       </nav>
     </>
   );
