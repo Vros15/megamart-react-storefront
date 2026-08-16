@@ -110,6 +110,13 @@ Two approaches were tried and dropped before landing on the third:
   - Icons injected inline (`src/components/ui/Icon.jsx`) so `currentColor`
     lets the active tab tint itself from one CSS rule, driven by
     react-router's own active-route detection
+- [x] **5. Admin tab in the mobile nav** - shown only for the admin account,
+      via a new `useIsAdmin` hook (Clerk `useUser()` plus the same
+      `ADMIN_USER_ID` check `Admin.jsx` already used). Desktop nav doesn't
+      have this yet, mobile only for now
+- [x] **6. Fixed hero image sizing on mobile** - the existing breakpoint only
+      reversed row order (`row-reverse`), which still split the width between
+      text and image; switched to `column-reverse` so both get the full width
 
 ---
 
@@ -119,8 +126,22 @@ Up next. Ordered by value relative to effort.
 
 - [ ] Search, filter, and sort, wired to the API query parameters
 - [ ] Custom hooks and wrapper components for repeated logic and layout
+      (`useIsAdmin` and `useAnalytics` already shipped; more will land
+      alongside the search/filter work)
 - [ ] Product detail pages at `/products/:id`
 - [ ] Order history
+
+---
+
+## Sprint 2d - Analytics
+
+- [x] **1. Google Analytics (GA4)** - `gtag.js` loaded and configured with
+      `send_page_view: false`, since a single-page app only fires one real
+      page load; a custom `useAnalytics` hook sends a `page_view` event on
+      every route change instead (`src/lib/analytics.js`,
+      `src/hooks/useAnalytics.js`). A no-op with `VITE_GA_MEASUREMENT_ID`
+      unset, unlike Clerk's hard failure - missing analytics shouldn't block
+      the app from running
 
 ---
 
