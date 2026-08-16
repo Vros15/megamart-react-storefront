@@ -84,3 +84,16 @@
   border-radius: var(--radius);
   object-fit: cover;
 }
+
+@media (max-width: 768px) {
+  .home-hero {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--space-lg);
+  }
+
+  .home-hero-content,
+  .home-hero-image {
+    flex: none;
+  }
+}
