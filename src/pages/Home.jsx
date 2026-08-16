@@ -10,15 +10,16 @@ import Spinner from "../components/ui/Spinner";
 import "./Home.css";
 
 const Home = () => {
-  // Get the current search query from the URL and determine if a filter is active.
+  // Get the current search/category from the URL and determine if a filter is active.
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") ?? "";
-  const hasActiveFilter = Boolean(search);
+  const category = searchParams.get("category") ?? "";
+  const hasActiveFilter = Boolean(search || category);
 
-  // Fetch products filtered by the current search query.
+  // Fetch products filtered by the current search and/or category.
   const fetchFilteredProducts = useCallback(
-    () => fetchProducts({ limit: MAX_PRODUCTS_LIMIT, search }),
-    [search],
+    () => fetchProducts({ limit: MAX_PRODUCTS_LIMIT, search, category }),
+    [search, category],
   );
   // Use the custom hook to fetch the filtered products.
   const { data, loading, error } = useFetch(fetchFilteredProducts);
