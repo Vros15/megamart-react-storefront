@@ -52,10 +52,26 @@
 }
 
 .product-detail-low-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
   margin: 0 0 var(--space-sm);
+  padding: 0.1875rem var(--space-sm) 0.1875rem 0.375rem;
+  background-color: var(--color-urgency-tint);
+  color: var(--color-urgency);
+  border-radius: 999px;
   font-size: var(--text-meta);
   font-weight: 600;
-  color: var(--color-urgency);
+  animation: low-stock-in 0.35s ease-out;
+}
+
+.product-detail-low-stock::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--color-urgency);
 }
 
 .product-detail-out-of-stock {
