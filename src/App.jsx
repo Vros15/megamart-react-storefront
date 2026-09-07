@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Admin from './pages/Admin'
 import ProductDetail from './pages/ProductDetail'
+import OrderConfirmation from './pages/OrderConfirmation'
 import NotFound from './pages/NotFound'
 import useAnalytics from './hooks/useAnalytics'
 import { initAnalytics } from './lib/analytics'
@@ -23,6 +24,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/checkout/success" element={<OrderConfirmation />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
