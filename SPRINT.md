@@ -134,7 +134,12 @@ Up next. Ordered by value relative to effort.
 - [ ] Custom hooks and wrapper components for repeated logic and layout
       (`useIsAdmin` and `useAnalytics` already shipped; more will land
       alongside the search/filter work)
-- [ ] Product detail pages at `/products/:id`
+- [x] Product detail pages at `/products/:id`
+  - `fetchProductById` already existed and was unused; `ProductCard`'s image/
+    name/category/price link to it, `AddToCartButton` sits outside that link
+    so clicking it doesn't also navigate
+  - A bad or deleted id shows the API's own error message with a link back,
+    rather than a blank page or an uncaught crash
 - [ ] Order history
 
 ---
