@@ -192,15 +192,37 @@ problem, not the general one" approach).
     success clears the cart (`CLEAR_CART`, new in `cartReducer.js`) and
     shows a confirmation; cancelled leaves the cart untouched. Verified both
     against a real live Stripe Checkout page, not mocked
-- [ ] 4. Wire a successful payment into a real order record - still an open
-      question, since there is no Customer identity behind the current
-      Clerk-based frontend for an `Order` to attach to
+- [ ] 4. Wire a successful payment into a real order record - moved to
+      Sprint 4, turned out to be bigger than one task
 - [x] 5. Document how to trigger a fake transaction safely
   - The cart page itself shows Stripe's published test card numbers in a
     small table, so a visitor trying the live demo isn't stuck at a real
     Stripe page with no idea what to enter
   - The same table lives as a code comment above `handleCheckout` in
     `CartSummary.jsx`, and in both repos' `v1.x`/`v1.0.0` release notes
+
+---
+
+## Sprint 4 - Order Identity and History (Planned)
+
+Same root cause as Sprint 3 task 4: the cart is client-side only, and a
+Clerk-authenticated shopper has no `Customer` record, so nothing can attach
+a completed payment to a real order, or answer "what has this shopper
+bought." Order history and "wire a successful payment into an order" are the
+same problem, not two separate features - splitting them apart would mean
+building a page with nothing to read, or writes nobody can see. Backend work
+(`ecommerce-backend-api`, its own Sprint 9) needs to land first. Picked up
+here tomorrow.
+
+- [ ] 1. `src/api/checkout.js` sends the Clerk token when the shopper is
+      signed in - still works for guests with no token, matching the
+      backend's optional-auth checkout route
+- [ ] 2. New `/orders` page, signed-in gated, fetching `GET /api/orders/me`
+      - the header's `Orders` link (desktop and mobile) already points here
+        and has 404'd via `NotFound` this whole time
+- [ ] 3. Full round-trip verification: sign in, pay with a real test card,
+      confirm the backend webhook actually fires and creates a real order,
+      confirm it shows up on `/orders` - not just the checkout redirect
 
 ---
 
