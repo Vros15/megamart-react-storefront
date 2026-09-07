@@ -27,4 +27,23 @@ const createCheckoutSession = async (items) => {
   return body.url;
 };
 
-export { createCheckoutSession };
+/**
+ * Fetches what was actually charged for a completed Checkout Session - the
+ * confirmation page uses this instead of whatever the client-side cart
+ * happened to contain, since that's just an assumption, not proof.
+ *
+ * @param {string} sessionId - The Stripe Checkout Session id.
+ * @returns {Promise<{paid: boolean, total: number, items: Array<{name: string, quantity: number, amount: number}>}>}
+ */
+const fetchCheckoutSession = async (sessionId) => {
+  const response = await fetch(`${API_BASE_URL}/checkout/session/${sessionId}`);
+  const body = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(body?.message ?? `Request failed with status ${response.status}`);
+  }
+
+  return body;
+};
+
+export { createCheckoutSession, fetchCheckoutSession };
