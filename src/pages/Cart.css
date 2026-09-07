@@ -3,6 +3,24 @@
   padding: var(--space-xl) 0;
 }
 
+.cart-status {
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-lg);
+  border-radius: var(--radius);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.cart-status-success {
+  background-color: var(--color-success);
+  color: var(--color-surface);
+}
+
+.cart-status-cancelled {
+  background-color: var(--color-fill);
+  color: var(--color-text-muted);
+}
+
 .cart-items {
   display: flex;
   flex-direction: column;
