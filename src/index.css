@@ -77,6 +77,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Pins the footer to the bottom of the viewport on short pages */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* Stops an oversized image from forcing the page wider than the viewport. */
 img {
   display: block;
@@ -136,13 +143,9 @@ h2 {
   max-width: var(--max-width);
   margin-inline: auto;
   padding-inline: var(--space-md);
-}
-
-/* Adds bottom padding to the container on mobile to avoid overlap with the fixed mobile tab bar */
-@media (max-width: 640px) {
-  .container {
-    padding-bottom: calc(var(--space-xl) + 56px);
-  }
+  /* Only takes effect where .container is a flex item (main, inside #root's
+     column flex) - inert everywhere else, harmless if reused elsewhere. */
+  flex: 1;
 }
 
 /* Digits share one width, so prices in a column line up on the decimal. */
