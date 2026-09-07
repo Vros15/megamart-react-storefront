@@ -12,12 +12,39 @@
   gap: var(--space-md);
 }
 
+/* Overrides index.css's global `a` styling (indigo, underline on hover) -
+   a tile should read as a tile, not a text link with an image inside it. */
+.category-tile {
+  display: block;
+  color: inherit;
+  border-radius: var(--radius);
+}
+
+.category-tile:hover {
+  text-decoration: none;
+}
+
 .category-tile-image-well {
   aspect-ratio: 1 / 1;
   margin-bottom: var(--space-sm);
   background-color: var(--color-fill);
   border-radius: var(--radius);
   overflow: hidden;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s ease;
+}
+
+.category-tile:hover .category-tile-image-well {
+  outline-color: var(--color-border);
+}
+
+.category-tile--active .category-tile-image-well {
+  outline-color: var(--color-primary);
+}
+
+.category-tile--active .category-tile-label {
+  color: var(--color-primary);
 }
 
 .category-tile-image,
@@ -25,6 +52,21 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+/* Once a category's active, the rest dim via the photo's own opacity
+   instead of sitting behind a flat grey box - the active tile (and every
+   tile before any filter's applied) stays at full opacity. */
+.category-grid--filtered .category-tile:not(.category-tile--active) .category-tile-image,
+.category-grid--filtered .category-tile:not(.category-tile--active) .category-tile-image-fallback {
+  opacity: 0.4;
+}
+
+.category-grid--filtered .category-tile:not(.category-tile--active):hover .category-tile-image,
+.category-grid--filtered .category-tile:not(.category-tile--active):hover .category-tile-image-fallback {
+  opacity: 0.7;
 }
 
 .category-tile-label {
