@@ -49,12 +49,17 @@
   color: var(--color-text);
 }
 
-/* Account navigation: Sign in, Orders, Cart */
+/* Account navigation: Sign in, Orders, Cart. margin-left: auto pushes it to
+   the right edge on its own - without it, it only ended up there on the
+   home page, because the search bar's flex: 1 happened to eat the space
+   before it. Every other page has no search bar, so it just sat next to the
+   logo instead. */
 .header-account-nav {
   display: flex;
   align-items: center;
   gap: var(--space-md);
   flex-shrink: 0;
+  margin-left: auto;
   white-space: nowrap;
 }
 
