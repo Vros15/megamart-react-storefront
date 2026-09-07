@@ -1,24 +1,28 @@
+import { Link } from "react-router";
 import { formatPrice } from "../../lib/format";
 import AddToCartButton from "./AddToCartButton";
 import ImageWithFallback from "../ui/ImageWithFallback";
 import "./ProductCard.css";
 
 // A card component that displays a single product, including its image, name, category, price, and stock status.
+// AddToCartButton sits outside the link so clicking it doesn't also navigate.
 const ProductCard = ({ product }) => (
   <article className="product-card">
-    <div className="product-card-image-well">
-      <ImageWithFallback
-        src={product.image}
-        alt={product.name}
-        imageClassName="product-card-image"
-        fallbackClassName="product-card-image-fallback"
-      />
-    </div>
+    <Link to={`/products/${product.id}`} className="product-card-link">
+      <div className="product-card-image-well">
+        <ImageWithFallback
+          src={product.image}
+          alt={product.name}
+          imageClassName="product-card-image"
+          fallbackClassName="product-card-image-fallback"
+        />
+      </div>
 
-    {/* Display the product category, name, and price. */}
-    <p className="product-card-category">{product.category}</p>
-    <h3 className="product-card-name">{product.name}</h3>
-    <p className="product-card-price tabular">{formatPrice(product.price)}</p>
+      {/* Display the product category, name, and price. */}
+      <p className="product-card-category">{product.category}</p>
+      <h3 className="product-card-name">{product.name}</h3>
+      <p className="product-card-price tabular">{formatPrice(product.price)}</p>
+    </Link>
 
     {/* Display the stock status if the product is available & low in stock */}
     {product.stock > 0 && product.stock < 25 && (
