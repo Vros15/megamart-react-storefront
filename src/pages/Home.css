@@ -48,33 +48,18 @@
   gap: var(--space-sm);
 }
 
-.home-hero-button-primary,
-.home-hero-button-secondary {
+.home-hero-button-primary {
   display: inline-block;
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius);
   font-size: var(--text-ui);
   font-weight: 600;
-}
-
-.home-hero-button-primary {
   background-color: var(--color-primary);
   color: var(--color-surface);
 }
 
 .home-hero-button-primary:hover {
   background-color: var(--color-primary-pressed);
-  text-decoration: none;
-}
-
-.home-hero-button-secondary {
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-}
-
-.home-hero-button-secondary:hover {
-  border-color: var(--color-text-muted);
   text-decoration: none;
 }
 
