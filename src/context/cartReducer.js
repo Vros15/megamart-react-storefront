@@ -33,12 +33,16 @@ const addItem = (state, product) => {
   };
 };
 
-// Reducer for cart state. Only ADD_ITEM exists so far. Throws on an unrecognized action type.
+// Reducer for cart state. Throws on an unrecognized action type.
 const cartReducer = (state, action) => {
   // Determine the action type and delegate to the appropriate handler.
   switch (action.type) {
     case "ADD_ITEM":
       return addItem(state, action.payload);
+    // Used after a successful Stripe checkout - the items were "purchased",
+    // so the cart resets rather than staying full.
+    case "CLEAR_CART":
+      return initialCartState;
     default:
       throw new Error(`Unknown cart action: ${action.type}`);
   }
