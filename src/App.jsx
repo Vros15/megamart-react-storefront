@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Admin from './pages/Admin'
+import ProductDetail from './pages/ProductDetail'
 import NotFound from './pages/NotFound'
 import useAnalytics from './hooks/useAnalytics'
 import { initAnalytics } from './lib/analytics'
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
