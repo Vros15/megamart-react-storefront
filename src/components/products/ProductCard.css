@@ -8,6 +8,18 @@
   padding: var(--space-md);
 }
 
+/* Overrides index.css's global `a` styling (indigo, underline on hover) -
+   the linked portion of the card should read as the card, not as a text
+   link with an image inside it. */
+.product-card-link {
+  display: block;
+  color: inherit;
+}
+
+.product-card-link:hover {
+  text-decoration: none;
+}
+
 /* Styles for the product image container */
 .product-card-image-well {
   aspect-ratio: 1 / 1;
