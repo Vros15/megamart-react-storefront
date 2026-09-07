@@ -30,6 +30,7 @@
 
   --color-featured: var(--amber);        /* restrained promotion only */
   --color-urgency: var(--burnt-orange);  /* genuine low stock only */
+  --color-urgency-tint: rgb(194 65 12 / 0.12); /* badge background for the above */
   --color-success: var(--green);         /* in stock, confirmations */
 
 /* --- Typography ---------------------------------------------------------
@@ -174,4 +175,30 @@ h2 {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Used by both ProductCard and ProductDetail's low-stock badge - shared
+   here rather than duplicated, since a keyframe defined in one component's
+   CSS file would still work in the other (Vite bundles all CSS together,
+   nothing is actually scoped) but only by an implicit, easy-to-break
+   dependency on that file existing.
+   Runs once, on entrance - not a continuous loop. Stock scarcity is real
+   information, not something that needs to keep flashing for attention. */
+@keyframes low-stock-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Decorative urgency signaling, not something anyone needs to see move. */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-low-stock,
+  .product-detail-low-stock {
+    animation: none;
+  }
 }
