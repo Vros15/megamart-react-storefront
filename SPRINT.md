@@ -125,12 +125,25 @@ Two approaches were tried and dropped before landing on the third:
 Up next. Ordered by value relative to effort.
 
 - [x] Search, filter, and sort, wired to the API query parameters
-  - Search bar and category tabs both drive `useSearchParams`, so they
+  - Search bar and category filtering both drive `useSearchParams`, so they
     combine freely (`?search=wireless&category=Electronics`); a `SortSelect`
     maps one dropdown to the API's `sortBy`/`sortOrder` pair
-  - Hero and the category tile grid hide whenever a filter is active - a
-    "Back to School Season" banner above filtered results read like it was
-    advertising unrelated products
+  - Hero hides whenever a filter is active - a "Back to School Season"
+    banner above filtered results read like it was advertising unrelated
+    products
+  - Category filtering later moved from a separate `CategoryTabs` nav row
+    onto the "Shop by category" tiles themselves - clicking a tile filters,
+    clicking the active one again clears it. `CategoryTabs.jsx`/`.css`
+    deleted rather than left unused. The tile grid now stays visible while a
+    category filter is active (it's the filter control now, hiding it would
+    remove the only way to switch or clear one), dimming every tile but the
+    active one via the photo's own opacity instead of a flat grey box.
+    Still hides on a search, same reasoning as the hero
+  - Caught a real bug during this change: the tiles' representative photos
+    were sourced from the same filtered fetch as the results grid, so once
+    filtered to one category, the other five tiles lost their images
+    entirely. Fixed with a second, always-unfiltered fetch just for the
+    tiles (`fetchAllProductsForTiles` in `Home.jsx`)
 - [ ] Custom hooks and wrapper components for repeated logic and layout
       (`useIsAdmin` and `useAnalytics` already shipped; more will land
       alongside the search/filter work)
