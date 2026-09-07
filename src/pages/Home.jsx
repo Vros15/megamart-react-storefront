@@ -52,12 +52,8 @@ const Home = () => {
             </h1>
             <p className="home-hero-subtext">Six categories, everything you need for work, home, and play.</p>
             <div className="home-hero-actions">
-              {/* Both link to "/" for now - there's nothing to link to yet. */}
-              <Link to="/" className="home-hero-button-primary">
-                Shop the catalogue
-              </Link>
-              <Link to="/" className="home-hero-button-secondary">
-                Gaming setup
+              <Link to="/?search=gaming" className="home-hero-button-primary">
+                Gaming Setup
               </Link>
             </div>
           </div>
