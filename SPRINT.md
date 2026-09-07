@@ -163,17 +163,38 @@ not real charges, matching this project's portfolio-demo scope (see the
 `ADMIN_USER_ID` reasoning in Sprint 2a for the same "solve the actual
 problem, not the general one" approach).
 
-- [ ] 1. Add Stripe test-mode keys (`STRIPE_SECRET_KEY` on the backend,
-      `VITE_STRIPE_PUBLISHABLE_KEY` on the frontend), gitignored like the
-      Clerk keys
-- [ ] 2. Backend: an endpoint that creates a Stripe Checkout Session (or
-      Payment Intent) for a cart's total, test mode only
-- [ ] 3. Frontend: replace the checkout `alert()` with a real Stripe
-      Checkout redirect (or Stripe Elements), using Stripe's published test
-      card numbers
-- [ ] 4. Wire a successful payment into the existing order flow (`POST
-      /api/orders/:customer`), so a completed checkout actually produces an
-      order, not just a cleared cart
+- [x] 1. Add Stripe test-mode keys - `STRIPE_SECRET_KEY` and `FRONTEND_URL`
+      on the backend only (`.env` locally, Vercel env vars for the live
+      deployment), gitignored like the Clerk keys
+  - No frontend key needed: the backend returns a ready-to-use Checkout
+    Session `url`, so the frontend just redirects to it. The original plan
+    assumed a `VITE_STRIPE_PUBLISHABLE_KEY` for Stripe.js/Elements, which
+    turned out unnecessary for a plain redirect flow
+- [x] 2. Backend: `POST /api/checkout` creates a Stripe Checkout Session for
+      the given cart items (`ecommerce-backend-api`)
+  - Stateless with respect to this API's own database - the frontend cart is
+    client-side only, there is no backend Cart/Customer record to attach to
+  - Re-fetches every product from MongoDB for its real price and checks
+    requested quantity against actual stock - a client-submitted price or
+    quantity is never trusted
+  - Deliberately has no `requireAuth`/`requireAdmin`, unlike every other
+    write route - it doesn't write to the database, and any shopper should
+    be able to check out
+  - Caught and fixed two real bugs during verification: the Stripe SDK
+    throws synchronously in its constructor with no key, which crashed the
+    app on `require()` alone until the client was moved from module scope
+    into the handler; and this Stripe account's Managed Payments (on by
+    default, requires a tax code per item) had to be explicitly disabled for
+    a test-mode session that doesn't need real tax compliance
+- [x] 3. Frontend: replace the checkout `alert()` with a real redirect to
+      the Checkout Session URL (`src/api/checkout.js`, `CartSummary.jsx`)
+  - `Cart.jsx` handles the `?checkout=success`/`?checkout=cancelled` return:
+    success clears the cart (`CLEAR_CART`, new in `cartReducer.js`) and
+    shows a confirmation; cancelled leaves the cart untouched. Verified both
+    against a real live Stripe Checkout page, not mocked
+- [ ] 4. Wire a successful payment into a real order record - still an open
+      question, since there is no Customer identity behind the current
+      Clerk-based frontend for an `Order` to attach to
 - [ ] 5. Document how to trigger a fake transaction safely: test mode keys
       only, Stripe's test card numbers, no path to a real charge
 
