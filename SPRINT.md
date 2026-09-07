@@ -124,7 +124,13 @@ Two approaches were tried and dropped before landing on the third:
 
 Up next. Ordered by value relative to effort.
 
-- [ ] Search, filter, and sort, wired to the API query parameters
+- [x] Search, filter, and sort, wired to the API query parameters
+  - Search bar and category tabs both drive `useSearchParams`, so they
+    combine freely (`?search=wireless&category=Electronics`); a `SortSelect`
+    maps one dropdown to the API's `sortBy`/`sortOrder` pair
+  - Hero and the category tile grid hide whenever a filter is active - a
+    "Back to School Season" banner above filtered results read like it was
+    advertising unrelated products
 - [ ] Custom hooks and wrapper components for repeated logic and layout
       (`useIsAdmin` and `useAnalytics` already shipped; more will land
       alongside the search/filter work)
