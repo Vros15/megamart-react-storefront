@@ -195,8 +195,12 @@ problem, not the general one" approach).
 - [ ] 4. Wire a successful payment into a real order record - still an open
       question, since there is no Customer identity behind the current
       Clerk-based frontend for an `Order` to attach to
-- [ ] 5. Document how to trigger a fake transaction safely: test mode keys
-      only, Stripe's test card numbers, no path to a real charge
+- [x] 5. Document how to trigger a fake transaction safely
+  - The cart page itself shows Stripe's published test card numbers in a
+    small table, so a visitor trying the live demo isn't stuck at a real
+    Stripe page with no idea what to enter
+  - The same table lives as a code comment above `handleCheckout` in
+    `CartSummary.jsx`, and in both repos' `v1.x`/`v1.0.0` release notes
 
 ---
 
