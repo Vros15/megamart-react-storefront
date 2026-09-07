@@ -6,20 +6,23 @@ import { MAX_PRODUCTS_LIMIT } from "../lib/constants";
 import ProductGrid from "../components/products/ProductGrid";
 import CategoryTabs from "../components/products/CategoryTabs";
 import CategoryGrid from "../components/products/CategoryGrid";
+import SortSelect from "../components/products/SortSelect";
 import Spinner from "../components/ui/Spinner";
 import "./Home.css";
 
 const Home = () => {
-  // Get the current search/category from the URL and determine if a filter is active.
+  // Get the current search/category/sort from the URL and determine if a filter is active.
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") ?? "";
   const category = searchParams.get("category") ?? "";
+  const sortBy = searchParams.get("sortBy") ?? "";
+  const sortOrder = searchParams.get("sortOrder") ?? "";
   const hasActiveFilter = Boolean(search || category);
 
-  // Fetch products filtered by the current search and/or category.
+  // Fetch products filtered by the current search/category, sorted by sortBy/sortOrder.
   const fetchFilteredProducts = useCallback(
-    () => fetchProducts({ limit: MAX_PRODUCTS_LIMIT, search, category }),
-    [search, category],
+    () => fetchProducts({ limit: MAX_PRODUCTS_LIMIT, search, category, sortBy, sortOrder }),
+    [search, category, sortBy, sortOrder],
   );
   // Use the custom hook to fetch the filtered products.
   const { data, loading, error } = useFetch(fetchFilteredProducts);
@@ -54,6 +57,10 @@ const Home = () => {
 
      {/* Category grid, only shown when no search filter is active. */}
            {!hasActiveFilter && <CategoryGrid products={data?.products ?? []} />}
+
+      <div className="home-toolbar">
+        <SortSelect />
+      </div>
 
       {/* Request status */}
       {loading && <Spinner />}
