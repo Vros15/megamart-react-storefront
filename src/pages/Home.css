@@ -4,6 +4,12 @@
   padding: var(--space-xl) 0;
 }
 
+.home-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-md);
+}
+
 .home-hero {
   display: flex;
   align-items: center;
