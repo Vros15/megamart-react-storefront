@@ -6,39 +6,31 @@ import CartSummary from "../components/cart/CartSummary";
 import "./Cart.css";
 
 const Cart = () => {
-  const { state, dispatch } = useCart();
+  const { state } = useCart();
   const { items } = state;
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Captured once, from the URL Stripe redirected back to - not re-read from
   // searchParams after that, since the effect below strips the query param
   // and re-reading it live would make the banner disappear immediately.
-  const [checkoutStatus] = useState(() => searchParams.get("checkout"));
+  // Success no longer lands here at all - it goes to /checkout/success,
+  // which can prove a real payment happened. This page only ever sees a
+  // shopper backing out of Stripe.
+  const [wasCancelled] = useState(() => searchParams.get("checkout") === "cancelled");
 
   useEffect(() => {
-    if (!checkoutStatus) return;
+    if (!wasCancelled) return;
 
-    // The items were "purchased" - the cart resets rather than staying full.
-    if (checkoutStatus === "success") {
-      dispatch({ type: "CLEAR_CART" });
-    }
-
-    // Drops ?checkout=... so refreshing this page doesn't repeat the banner
-    // or re-clear an already-empty cart.
+    // Drops ?checkout=cancelled so refreshing this page doesn't repeat it.
     const next = new URLSearchParams(searchParams);
     next.delete("checkout");
     setSearchParams(next, { replace: true });
-    // Runs once on mount only - checkoutStatus is fixed above, and re-running
-    // this whenever searchParams changes would fight its own cleanup.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const statusBanner =
-    checkoutStatus === "success" ? (
-      <p className="cart-status cart-status-success">Payment successful. Thanks for your order!</p>
-    ) : checkoutStatus === "cancelled" ? (
-      <p className="cart-status cart-status-cancelled">Checkout was cancelled. Your cart is unchanged.</p>
-    ) : null;
+  const statusBanner = wasCancelled ? (
+    <p className="cart-status cart-status-cancelled">Checkout was cancelled. Your cart is unchanged.</p>
+  ) : null;
 
   if (items.length === 0) {
     return (
