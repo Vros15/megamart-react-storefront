@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router'
 import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
+import Orders from './pages/Orders'
 import Admin from './pages/Admin'
 import ProductDetail from './pages/ProductDetail'
 import OrderConfirmation from './pages/OrderConfirmation'
@@ -22,6 +23,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/checkout/success" element={<OrderConfirmation />} />
