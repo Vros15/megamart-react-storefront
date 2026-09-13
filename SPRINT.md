@@ -153,7 +153,6 @@ Up next. Ordered by value relative to effort.
     so clicking it doesn't also navigate
   - A bad or deleted id shows the API's own error message with a link back,
     rather than a blank page or an uncaught crash
-- [ ] Order history
 
 ---
 
@@ -201,12 +200,12 @@ problem, not the general one" approach).
     a test-mode session that doesn't need real tax compliance
 - [x] 3. Frontend: replace the checkout `alert()` with a real redirect to
       the Checkout Session URL (`src/api/checkout.js`, `CartSummary.jsx`)
-  - `Cart.jsx` handles the `?checkout=success`/`?checkout=cancelled` return:
-    success clears the cart (`CLEAR_CART`, new in `cartReducer.js`) and
-    shows a confirmation; cancelled leaves the cart untouched. Verified both
-    against a real live Stripe Checkout page, not mocked
-- [ ] 4. Wire a successful payment into a real order record - moved to
-      Sprint 4, turned out to be bigger than one task
+  - `Cart.jsx` originally handled both `?checkout=success` and
+    `?checkout=cancelled`; success later moved to its own page (see Sprint
+    4), so `Cart.jsx` now only handles `?checkout=cancelled`. Both were
+    verified against a real live Stripe Checkout page, not mocked
+- [x] 4. Wire a successful payment into a real order record - turned out to
+      be bigger than one task, delivered in full as Sprint 4
 - [x] 5. Document how to trigger a fake transaction safely
   - The cart page itself shows Stripe's published test card numbers in a
     small table, so a visitor trying the live demo isn't stuck at a real
