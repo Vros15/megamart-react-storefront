@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import { formatPrice } from "../../lib/format";
 import { createCheckoutSession } from "../../api/checkout";
 import "./CartSummary.css";
 
 // Renders the cart summary, including the total price and a checkout button.
 const CartSummary = ({ items }) => {
+  const { getToken } = useAuth();
   const [checkingOut, setCheckingOut] = useState(false);
   const [error, setError] = useState(null);
 
@@ -33,7 +35,10 @@ const CartSummary = ({ items }) => {
     setError(null);
 
     try {
-      const url = await createCheckoutSession(items);
+      // getToken() resolves to null when signed out - the backend's
+      // optional-auth route treats that exactly like a guest checkout.
+      const token = await getToken();
+      const url = await createCheckoutSession(items, token);
       window.location.href = url;
     } catch (err) {
       setError(err.message);
