@@ -216,7 +216,7 @@ problem, not the general one" approach).
 
 ---
 
-## Sprint 4 - Order Identity and History (Planned)
+## Sprint 4 - Order Identity and History
 
 Same root cause as Sprint 3 task 4: the cart is client-side only, and a
 Clerk-authenticated shopper has no `Customer` record, so nothing can attach
@@ -224,18 +224,18 @@ a completed payment to a real order, or answer "what has this shopper
 bought." Order history and "wire a successful payment into an order" are the
 same problem, not two separate features - splitting them apart would mean
 building a page with nothing to read, or writes nobody can see. Backend work
-(`ecommerce-backend-api`, its own Sprint 9) needs to land first. Picked up
-here tomorrow.
+landed first (`ecommerce-backend-api`, its own Sprint 9).
 
-- [ ] 1. `src/api/checkout.js` sends the Clerk token when the shopper is
+- [x] 1. `src/api/checkout.js` sends the Clerk token when the shopper is
       signed in - still works for guests with no token, matching the
       backend's optional-auth checkout route
-- [ ] 2. New `/orders` page, signed-in gated, fetching `GET /api/orders/me`
-      - the header's `Orders` link (desktop and mobile) already points here
-        and has 404'd via `NotFound` this whole time
-- [ ] 3. Full round-trip verification: sign in, pay with a real test card,
-      confirm the backend webhook actually fires and creates a real order,
-      confirm it shows up on `/orders` - not just the checkout redirect
+- [x] 2. New `/orders` page, signed-in gated, fetching `GET /api/orders/me`
+      - the header's `Orders` link (desktop and mobile) finally points
+        somewhere real, instead of 404'ing via `NotFound`
+- [x] 3. Full round-trip verification: signed in, paid with a real test
+      card, confirmed the backend webhook fired and created a real order
+      with the correct `clerkUserId`, confirmed it showed up on `/orders`
+      filtered to that account and nobody else's
 
 ---
 
