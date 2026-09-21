@@ -268,7 +268,7 @@ tracks its share of this work as its own Sprints 10 to 17 (same order).
 
 ### Sprint 5 - Security Prerequisites (S)
 
-- [ ] 1. Backend: restrict order, customer, and cart read endpoints to admin
+- [x] 1. Backend: restrict order, customer, and cart read endpoints to admin
       access (the storefront only uses `GET /api/orders/me`)
 - [ ] 2. Backend: generic error message for unexpected 500s, real message
       only for known `AppError`s
