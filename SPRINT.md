@@ -262,7 +262,9 @@ embeddings, retrieval, context assembly, structured output, evaluation) is a
 small, readable module.
 
 Each task below starts with **Backend:** (`ecommerce-backend-api`) or
-**Frontend:** (this repo). Sizes are S / M / L / XL.
+**Frontend:** (this repo). Sizes are S / M / L / XL. The backend's
+[`SPRINT.md`](https://github.com/Vros15/ecommerce-backend-api/blob/main/SPRINT.md)
+tracks its share of this work as its own Sprints 10 to 17 (same order).
 
 ### Sprint 5 - Security Prerequisites (S)
 
