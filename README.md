@@ -200,9 +200,40 @@ in this repo was checked against real data instead of assumed correct:
 
 Full task-by-task plan and status: [`SPRINT.md`](./SPRINT.md).
 
-Short version- What's planned next:
+### Shipped
 
-- Search, filter, and sort wired to the API's query parameters
+- Search, category filtering, and sort, all driven by the URL
 - Product detail pages (`/products/:id`)
-- Order history
-- Automated tests
+- Stripe test-mode checkout with a real order confirmation page
+- Order history (`/orders`), with orders created by a verified Stripe webhook
+
+### Coming next: AI-assisted refund support
+
+A support chat built into the store, starting with refunds. A signed-in
+shopper can say something like "the headphones I ordered arrived broken" and
+get guided to a filed refund request, without needing to know their order
+number.
+
+- **Answers come from MegaMart's own policies (RAG).** Policy documents are
+  split into sections, turned into embeddings, and stored in MongoDB Atlas
+  Vector Search. Each question pulls back the relevant sections, and the
+  reply has to cite them. If no policy covers the question, the chat hands
+  off to a person instead of making something up.
+- **The AI never moves money.** It can only open a ticket. Every refund is
+  approved by a support agent and carried out by backend code that re-checks
+  the order, the payment, and the refund policy on its own.
+- **Facts come from the backend, not the AI.** Who the shopper is, which
+  orders are theirs, what they paid, and what's refundable all come from the
+  database and Stripe. Nothing the AI or the shopper types can change them.
+- **Hard rules live in code, not in a prompt.** The refund window,
+  refundable amount, and approval rules are a plain, tested policy function.
+- **A support desk for agents**: ticket queue, the full case with the policy
+  sections the AI relied on, and approve / deny / request-more-info actions,
+  every step recorded in an audit trail.
+- **Measured, not demoed.** An evaluation suite scores retrieval quality,
+  intent accuracy, escalation decisions, prompt-injection resistance,
+  latency, and cost.
+- **No AI framework.** Chunking, embeddings, retrieval, and prompt assembly
+  are small, readable modules, built by hand to show how each piece works.
+
+Sprints 5 to 12 in [`SPRINT.md`](./SPRINT.md) break this down step by step.
