@@ -238,151 +238,54 @@ landed first (`ecommerce-backend-api`, its own Sprint 9).
 
 ---
 
-## Up Next - AI-Assisted Refund Support (Sprints 5 to 12)
+## Up Next - AI-Assisted Refund Support (Sprints 5 and 6)
 
-A support chat built into the store, starting with refunds. A signed-in
-shopper describes a problem ("my headphones arrived broken"), and the system
-looks up MegaMart's written policies (RAG), finds the right order from the
-shopper's own account, checks it against a refund policy written in code, and
-opens a ticket for a person to approve.
+MegaMart is adding a support chat, starting with refunds. A signed-in shopper
+describes a problem ("my headphones arrived broken"), and the system looks up
+MegaMart's written policies, finds the right order from the shopper's own
+account, checks it against refund rules written in code, and opens a ticket
+for a person to approve. **The AI never moves money.**
 
-How the pieces split up:
+The work spans three repositories:
 
-| Piece | Job |
+| Repo | Role |
 | --- | --- |
-| RAG (policy documents + vector search) | "What does MegaMart policy say?" |
-| LLM (Claude) | Understands the message, asks follow-up questions, writes answers grounded in the retrieved policy |
-| Backend code | "What is actually true?" Identity, order ownership, payment status, refund amount |
-| Policy engine | Hard rules: ownership, paid, refund window, refundable amount |
-| Decision provider | Continue, ask for more info, send to a person, or not eligible. Swappable, built so a dedicated decision model (JEV) can be evaluated later |
-| Support agent | Approves or denies. **The AI never moves money** |
+| `megamart-ai-service` (new, Python) | FastAPI service: retrieval over the policy documents (embeddings in PostgreSQL with pgvector), intent detection, grounded replies, orchestration |
+| `ecommerce-backend-api` (Node) | Still the source of truth: orders, tickets, refund execution through Stripe, audit trail |
+| This repo | The chat, the shopper's ticket pages, and the agent approval desk |
 
-Built without frameworks like LangChain on purpose: every stage (chunking,
-embeddings, retrieval, context assembly, structured output, evaluation) is a
-small, readable module.
+The chat page talks to the AI service with the shopper's Clerk token; the AI
+service forwards that same token to the backend API, so it never gains access
+to anyone else's orders. Sprints below are this repo's share. The other two
+track their own.
 
-Each task below starts with **Backend:** (`ecommerce-backend-api`) or
-**Frontend:** (this repo). Sizes are S / M / L / XL. The backend's
-[`SPRINT.md`](https://github.com/Vros15/ecommerce-backend-api/blob/main/SPRINT.md)
-tracks its share of this work as its own Sprints 10 to 17 (same order).
+### Sprint 5 - Support Chat
 
-### Sprint 5 - Security Prerequisites (S)
+- [ ] 1. `src/api/support.js`, calling the AI service with a fresh Clerk
+      token, same pattern as `useAdminApi`
+- [ ] 2. `/support` chat page: message list, composer with a length counter,
+      pending state
+- [ ] 3. Entry points: a "Help" link in the header and mobile tab bar, and
+      "Get help with this order" on each order card on `/orders`
+- [ ] 4. Show the policy the answer came from, so a reply can be traced back
+      to the written policy
+- [ ] 5. Error and limit states: AI unavailable, message limit reached, and
+      a link to the plain refund form as a fallback
+- [ ] 6. Checked at 375px alongside the fixed mobile tab bar
 
-- [x] 1. Backend: restrict order, customer, and cart read endpoints to admin
-      access (the storefront only uses `GET /api/orders/me`)
-- [ ] 2. Backend: generic error message for unexpected 500s, real message
-      only for known `AppError`s
-- [ ] 3. Backend: separate test database, and fix the failing product-count
-      test
-- [ ] 4. Backend: shared Stripe client with a pinned API version
-- [ ] 5. Backend: small structured JSON logger for all new code
+### Sprint 6 - Tickets and the Approval Desk
 
-### Sprint 6 - RAG Foundation (L)
-
-MegaMart's support policies can be ingested and searched.
-
-- [ ] 1. Backend: confirm MongoDB Atlas Vector Search is available on the
-      cluster, and pick the embedding model (Voyage AI)
-- [ ] 2. Backend: write the policy documents in `knowledge/` (refunds,
-      damaged products, duplicate charges, returns, cancellations,
-      shipping, FAQ), each with a version and effective date
-- [ ] 3. Backend: `config/refundPolicy.js` holds the hard numbers, plus a
-      test that fails if the written policy and the config disagree
-- [ ] 4. Backend: `EmbeddingProvider` with a real and a fake (offline)
-      implementation
-- [ ] 5. Backend: `KnowledgeDocument` and `KnowledgeChunk` models
-- [ ] 6. Backend: chunker that splits on headings so each chunk is one
-      policy section, with configurable size and overlap
-- [ ] 7. Backend: ingestion script (`npm run ingest:knowledge`): load,
-      clean, block anything that looks like a secret, skip unchanged docs,
-      chunk, embed, store, mark old versions as superseded
-- [ ] 8. Backend: `Retriever` with Atlas Vector Search and an in-memory
-      version for tests; every result carries its source and version
-- [ ] 9. Backend: retrieval evaluation (`npm run eval:retrieval`) with 30
-      labelled questions, reporting how often the right policy comes back
-
-### Sprint 7 - Grounded Support Chat (XL)
-
-A shopper can ask policy questions and get answers based on MegaMart's
-actual policies, with no made-up rules.
-
-- [ ] 1. Backend: `LLMProvider` (Claude) with a fake for tests, timeouts,
-      and bounded retries
-- [ ] 2. Backend: `Conversation`, `Message`, and `AiDecision` models
-- [ ] 3. Backend: AI gateway: sign-in required, per-user message limits
-      stored in MongoDB, message length cap, off unless the AI key is set
-- [ ] 4. Backend: intent detection with schema-validated output (refund or
-      not, reason, order hint, what's missing)
-- [ ] 5. Backend: prompt assembly with clearly labelled sections, policy
-      text treated as data, not instructions
-- [ ] 6. Backend: grounded reply that must cite the policy chunks it used,
-      and a fixed "let me get a person" reply when no policy matches
-- [ ] 7. Backend: support orchestrator (code-driven workflow, the AI gets no
-      tools of its own) and `POST /api/support/chat`
-- [ ] 8. Frontend: `/support` chat page, with entry points in the header
-      and on `/orders`, checked at 375px
-- [ ] 9. Backend: chat evaluation (`npm run eval:support`) including
-      prompt-injection attempts, with latency and token counts
-
-### Sprint 8 - Trusted Refund Context (L)
-
-Real order and payment facts, never taken from the AI or the shopper's text.
-
-- [ ] 1. Backend: add payment details to orders (Stripe payment id, amount
-      in cents, payment status, amount refunded, line-item snapshot)
-- [ ] 2. Backend: webhook saves those, only for paid sessions
-- [ ] 3. Backend: one-time backfill for existing orders
-- [ ] 4. Backend: match the shopper's description to one of **their own**
-      orders, and ask when it's ambiguous
-- [ ] 5. Backend: refund context from the order plus live Stripe data
-- [ ] 6. Backend: refund policy engine as a pure, fully tested function
-- [ ] 7. Backend: evaluation cases for someone else's order, an expired
-      window, and an already-refunded order
-
-### Sprint 9 - Decisions and Ticket Escalation (M)
-
-- [ ] 1. Backend: `DecisionProvider` interface with a rules-based version
-- [ ] 2. Backend: `Ticket` and `AuditEvent` models, ticket state machine
-- [ ] 3. Backend: automatic ticket creation with the full case attached:
-      conversation summary, policy references, policy result,
-      recommendation, reason for escalation
-- [ ] 4. Backend: shopper ticket routes (list, detail, reply)
-- [ ] 5. Frontend: `/support/tickets` list and detail pages
-
-### Sprint 10 - Support Desk (L)
-
-- [ ] 1. Backend: support-agent role through Clerk, alongside admin
-- [ ] 2. Frontend: role-aware navigation (`useIsSupportAgent`)
-- [ ] 3. Backend: ticket queue and detail routes, deny and request-info
-      actions
-- [ ] 4. Frontend: `/admin/support` queue with status filters
-- [ ] 5. Frontend: ticket detail: customer, order, payment, conversation,
-      cited policy, policy checks, recommendation, history
-- [ ] 6. Frontend: simple refund request form as a fallback if the AI is
-      unavailable
-
-### Sprint 11 - Stripe Test Refunds (L)
-
-- [ ] 1. Backend: `Refund` model
-- [ ] 2. Backend: refund service: reloads the ticket, order, and payment,
-      re-checks the policy, calculates the amount itself, then refunds
-      through Stripe with an idempotency key so it can only happen once
-- [ ] 3. Backend: approve route and Stripe refund webhooks
-- [ ] 4. Frontend: approve action; shopper sees "Refunded"
-- [ ] 5. Backend: tests for double clicks, retries, and Stripe failures
-
-### Sprint 12 - Evaluation and Hardening (M)
-
-- [ ] 1. Backend: grow the evaluation set to 50+ cases (target 100+), one
-      report covering intent accuracy, retrieval quality, made-up answer
-      rate, escalation accuracy, security, latency, and cost
-- [ ] 2. Backend: failure tests: AI timeout, bad AI output, embedding
-      outage, missing search index, rate limits
-- [ ] 3. Backend: tune model settings from the evaluation numbers
-- [ ] 4. Backend: support metrics, including how often agents agree with
-      the AI's recommendation
-- [ ] 5. Backend: `docs/ai/` write-ups for the shipped system (RAG,
-      refund workflow, security, evaluation)
+- [ ] 1. `/support/tickets`: the shopper's refund requests and their status
+- [ ] 2. Ticket detail with the conversation and a reply box when an agent
+      asks for more information
+- [ ] 3. Plain refund request form, used when the AI is unavailable
+- [ ] 4. `useIsSupportAgent`, and role-aware navigation
+- [ ] 5. `/admin/support`: ticket queue with status filters
+- [ ] 6. Ticket detail for agents: customer, order, payment, conversation,
+      the policy the AI relied on, the policy check result, and approve /
+      deny / request-info actions
+- [ ] 7. Confirmation before approving a refund, and a disabled state while
+      the request is in flight
 
 ---
 

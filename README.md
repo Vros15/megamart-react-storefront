@@ -214,11 +214,14 @@ shopper can say something like "the headphones I ordered arrived broken" and
 get guided to a filed refund request, without needing to know their order
 number.
 
+- **A separate Python service does the AI work.** `megamart-ai-service`
+  (FastAPI) handles retrieval, intent, and grounded replies. This app and the
+  Node API stay as they are; the AI service is a third deployment.
 - **Answers come from MegaMart's own policies (RAG).** Policy documents are
-  split into sections, turned into embeddings, and stored in MongoDB Atlas
-  Vector Search. Each question pulls back the relevant sections, and the
-  reply has to cite them. If no policy covers the question, the chat hands
-  off to a person instead of making something up.
+  split into sections, turned into embeddings, and stored in PostgreSQL with
+  pgvector. Each question pulls back the relevant sections, and the reply has
+  to cite them. If no policy covers the question, the chat hands off to a
+  person instead of making something up.
 - **The AI never moves money.** It can only open a ticket. Every refund is
   approved by a support agent and carried out by backend code that re-checks
   the order, the payment, and the refund policy on its own.
@@ -236,4 +239,6 @@ number.
 - **No AI framework.** Chunking, embeddings, retrieval, and prompt assembly
   are small, readable modules, built by hand to show how each piece works.
 
-Sprints 5 to 12 in [`SPRINT.md`](./SPRINT.md) break this down step by step.
+This repo's share is the chat, the shopper's ticket pages, and the agent
+approval desk. Sprints 5 and 6 in [`SPRINT.md`](./SPRINT.md) break that down
+step by step.
