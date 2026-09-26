@@ -144,9 +144,9 @@ Up next. Ordered by value relative to effort.
     filtered to one category, the other five tiles lost their images
     entirely. Fixed with a second, always-unfiltered fetch just for the
     tiles (`fetchAllProductsForTiles` in `Home.jsx`)
-- [ ] Custom hooks and wrapper components for repeated logic and layout
-      (`useIsAdmin` and `useAnalytics` already shipped; more will land
-      alongside the search/filter work)
+- [x] Custom hooks for repeated logic: `useFetch`, `useCart`,
+      `useAdminApi`, `useIsAdmin`, and `useAnalytics`. New hooks are added
+      when a feature needs one, not as a standalone task
 - [x] Product detail pages at `/products/:id`
   - `fetchProductById` already existed and was unused; `ProductCard`'s image/
     name/category/price link to it, `AddToCartButton` sits outside that link

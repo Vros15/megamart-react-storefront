@@ -8,6 +8,7 @@ routing), with its own backend and a real authenticated admin panel.
 
 Live demo: <https://megamart-react-storefront.vercel.app>
 Backend API repo: <https://github.com/Vros15/ecommerce-backend-api>
+AI service repo: <https://github.com/Vros15/megamart-ai-service> (in development)
 
 ---
 
